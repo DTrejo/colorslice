@@ -1,0 +1,47 @@
+<!doctype html> 
+<html lang="en">
+ <head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="aristo/css/aristo.css" type="text/css">
+   <style type="text/css" media="screen">
+   body {
+     margin: 3em auto;
+     padding: 0em;
+     font-family: Apex,"Helvetica Neue","HelveticaNeue","Lucida Grande", Helvetica, Arial, sans-serif;
+     font-size: 100%;
+     max-width: 33em;
+     color: #222;
+     background:#dfdfdf;
+   }
+    canvas {
+      background:#fff;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+    #colors > p {
+      border: 1px solid #999;
+      margin: 1em;
+    }
+    #colors > p > img {
+      display: inline;
+      padding: 2px;
+    }
+   </style>
+  </head>
+  
+  
+  <body>
+    <h1>Color Slice</h1>
+    <p>Drag and drop images from your desktop. Click to capture a color.</p>
+    <canvas id="screen" width="500" height="500">No canvas support. If you're using IE email the creator of this and tell him he forgot to use IECanvas!</canvas>
+    <p>Zoom &mdash; Color Swatch &mdash; Click to save your color!</p>
+    <canvas id="zoom" width="100" height="100"></canvas>
+    <canvas id="swatch" width="100" height="100"></canvas>
+    <div id="colors">
+      
+    </div>
+    
+    <script src="jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="colorslice.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+</html>
