@@ -92,7 +92,7 @@ function mouseup(event) {
   var para = $('<p>').text(color)
                      .prepend(miniswatch);
   $('#colors').append(para);
-  console.log(para);
+  // console.log(para);
 }
 
 function drop(event) {
@@ -112,7 +112,7 @@ function drop(event) {
       ratio = this.width / this.height;
       context.drawImage( this, 0, 0
                        , ratio * canvas.width // canvas is square.
-                       , convas.height);
+                       , canvas.height);
     }
   };
 
@@ -157,4 +157,12 @@ function crossBrowserRelativeMousePos(e) {
 		'x': mouse.x - element.x,
 		'y': mouse.y - element.y
 	};
+}
+
+// stop shit from breaking if it's not there.
+if(!window.console) {
+  window.console = new function() {
+    this.log = function(str) {};
+    this.dir = function(str) {};
+  };
 }
