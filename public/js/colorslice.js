@@ -90,8 +90,10 @@ function mouseup(event) {
                              .attr('width', 16)
                              .attr('height', 16);
   var para = $('<p>').text(color)
-                     .prepend(miniswatch);
-  $('#colors').append(para);
+                     .prepend(miniswatch)
+                     .hide();
+  $('#colors').prepend(para);
+  para.slideDown('fast');
   // console.log(para);
 }
 
