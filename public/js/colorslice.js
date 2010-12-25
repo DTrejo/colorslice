@@ -99,29 +99,32 @@ function mouseup(event) {
 
 function drop(event) {
   var file = event.dataTransfer.files[0];
-  var reader = new FileReader();
+  // if (FileReader) { // guard safari
+  //   var reader = new FileReader();
+  // }
+  console.log(file);
 
   reader.onload = function (event) {
-  image = document.createElement('img');
-  image.onload = function () {
-    var ratio;
-    if (this.width > this.height) {
-      ratio = this.height / this.width; // less than 1
-      context.drawImage( this, 0, 0
-                       , canvas.width
-                       , canvas.height * ratio);
-    } else { 
-      ratio = this.width / this.height;
-      context.drawImage( this, 0, 0
-                       , ratio * canvas.width // canvas is square.
-                       , canvas.height);
-    }
+    image = document.createElement('img');
+    image.onload = function () {
+      var ratio;
+      if (this.width > this.height) {
+        ratio = this.height / this.width; // less than 1
+        context.drawImage( this, 0, 0
+                         , canvas.width
+                         , canvas.height * ratio);
+      } else { 
+        ratio = this.width / this.height;
+        context.drawImage( this, 0, 0
+                         , ratio * canvas.width // canvas is square.
+                         , canvas.height);
+      }
+    };
+    
+    image.src = event.target.result;
   };
 
-  image.src = event.target.result;
-  };
-
-  reader.readAsDataURL( file );
+  // reader.readAsDataURL(file);
   return cancel(event);
 }
 
