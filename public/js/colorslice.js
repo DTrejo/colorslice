@@ -99,9 +99,7 @@ function mouseup(event) {
 
 function drop(event) {
   var file = event.dataTransfer.files[0];
-  // if (FileReader) { // guard safari
-  //   var reader = new FileReader();
-  // }
+  var reader = new FileReader();
   console.log(file);
 
   reader.onload = function (event) {
@@ -124,7 +122,7 @@ function drop(event) {
     image.src = event.target.result;
   };
 
-  // reader.readAsDataURL(file);
+  reader.readAsDataURL(file);
   return cancel(event);
 }
 
