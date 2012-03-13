@@ -202,7 +202,7 @@ function humanizeColor(colors) {
 //
 function toHex(c) {
     var m = /rgba?\((\d+), (\d+), (\d+)/.exec(c);
-    console.log(m);
+    // console.log(m);
     return m ? '#' + ( m[1] << 16 | m[2] << 8 | m[3] ).toString(16)
              : c;
 }
