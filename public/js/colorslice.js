@@ -5,6 +5,7 @@ var zoom;
 var zoomcontext;
 var swatch;
 var swatchcontext;
+var current;
 var mouse = { x:0
             , y:0
             };
@@ -25,6 +26,7 @@ $(document).ready(function() {
   zoomcontext = zoom.getContext('2d');
   swatch = $('#swatch').get(0);
   swatchcontext = swatch.getContext('2d');
+  current = $('#current');
 });
 
 function mousemove(event) {
@@ -61,7 +63,11 @@ function mousemove(event) {
     swatchcontext.fillStyle = "#000";
     swatchcontext.fillRect(0, 0, swatch.width, swatch.height);
     swatchcontext.drawImage(newCanvas, 0, 0, swatch.width, swatch.height);
-  
+
+    // also put the color into the #current paragraph
+    var d = swatchcontext.getImageData(0, 0, 4, 4).data;
+    var colors = [ d[0], d[1], d[2], d[3] ];
+    current.text(humanizeColor(colors).split(';').join(';\n')+'\n /* click now to save */');
   }
   // testing
   // if (!started) {
@@ -79,21 +85,28 @@ function mousedown(event) {
   return cancel(event);
 }
 
+var removePlaceholder = true;
 function mouseup(event) {
   // capture pixel, display it.
-  var imageData = swatchcontext.getImageData(0, 0, 4, 4);
-  var d = imageData.data;
-  var colors = [d[0], d[1], d[2], d[3]];
-  var rgba = 'rgba('+ colors.join(', ') + ')';
-  var hex = toHex(rgba);
-  
-  var miniswatch = $('<img>').attr('src', swatch.toDataURL('image/png'))
-                             .attr('width', 16)
-                             .attr('height', 16);
-  var para = $('<p>').text(rgba + '; /* ' + hex + ' */')
-                     .prepend(miniswatch)
-                     .hide();
+  var d = swatchcontext.getImageData(0, 0, 4, 4).data;
+  var colors = [ d[0], d[1], d[2], d[3] ];
+
+  var miniswatch = $('<img>')
+    .attr('src', swatch.toDataURL('image/png'))
+    .attr('width', 16)
+    .attr('height', 16);
+
+  var para = $('<p>')
+    .text(humanizeColor(colors))
+    .prepend(miniswatch)
+    .hide();
+
   $('#colors').prepend(para);
+
+  if (removePlaceholder) {
+      $('#colors .remove').remove();
+      removePlaceholder = false;
+  }
   para.slideDown('fast');
   // console.log(para);
 }
@@ -112,14 +125,14 @@ function drop(event) {
         context.drawImage( this, 0, 0
                          , canvas.width
                          , canvas.height * ratio);
-      } else { 
+      } else {
         ratio = this.width / this.height;
         context.drawImage( this, 0, 0
                          , ratio * canvas.width // canvas is square.
                          , canvas.height);
       }
     };
-    
+
     image.src = event.target.result;
   };
 
@@ -171,12 +184,22 @@ if(!window.console) {
   };
 }
 
-// 
+//          r   g   b   a
+// input: [ 00, 00, 00, 00]
+// output: "rgba(210, 229, 236, 255); /* #d2e5ec */"
+//
+function humanizeColor(colors) {
+    var rgba = 'rgba('+ colors.join(', ') + ')';
+    var hex = toHex(rgba);
+    return rgba + '; /* ' + hex + ' */';
+}
+
+//
 // via http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
-// 
+//
 // Usage:
 //      equals(colorToHex('rgb(120, 120, 240)'), '#7878f0');
-// 
+//
 function toHex(c) {
     var m = /rgba?\((\d+), (\d+), (\d+)/.exec(c);
     console.log(m);

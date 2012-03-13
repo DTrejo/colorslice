@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -26,6 +26,8 @@
     #colors > p {
       border: 1px solid #999;
       margin: 1em;
+    }
+    code, #colors > p {
       font-family: monaco, Andale Mono, "Courier New", monospace;
     }
     #colors > p > img {
@@ -38,8 +40,16 @@
       overflow: hidden;
     }
     .col3 > div {
-      width: 32%;
       display: inline-block;
+      width: 20%;
+    }
+    .col3 > div + div + div {
+      width: 35%;
+      display: inline-table;
+      vertical-align: top;
+    }
+    #current {
+      float: left;
     }
   </style>
 </head>
@@ -51,7 +61,7 @@
     <canvas id="screen" width="500" height="500">No canvas support. If you're
     using IE email the creator of this and tell him he forgot to use
     IECanvas!</canvas>
-    
+
     <p>Click to save your color!</p>
     <div class="col3">
       <div>
@@ -63,17 +73,17 @@
         <canvas id="swatch" width="100" height="100"></canvas>
       </div>
       <div>
-        <p>Current Color</p>
-        <canvas id="swatch" width="100" height="100"></canvas>
+        <p id="curtext">Current Color</p><br>
+        <pre id="current">(None yet)</pre>
       </div>
     </div>
 
     <!-- saved swatches go here -->
     <p>Saved Swatches</p>
     <div id="colors">
-      <p>(None yet, click a pixel on your image to save one!)</p>
+      <p class="remove">(None yet, click on your image to save one!)</p>
     </div>
-    
+
     <h2>Supported Browsers</h2>
     <ul>
       <li>Chrome</li>
@@ -83,7 +93,7 @@
       <li>Not IE, because no drag and drop, sadly.</li>
     </ul>
     <p>Made by <a href="http://dtrejo.com/">David Trejo</a></p>
-    
+
     <script src="jquery-1.4.2.min.js"></script>
     <script src="js/lib/excanvas.compiled.js"></script>
     <script src="js/colorslice.js"></script>
