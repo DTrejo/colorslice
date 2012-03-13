@@ -84,12 +84,13 @@ function mouseup(event) {
   var imageData = swatchcontext.getImageData(0, 0, 4, 4);
   var d = imageData.data;
   var colors = [d[0], d[1], d[2], d[3]];
-  var color = 'rgba('+ colors.join(', ') +')';
+  var rgba = 'rgba('+ colors.join(', ') + ')';
+  var hex = toHex(rgba);
   
   var miniswatch = $('<img>').attr('src', swatch.toDataURL('image/png'))
                              .attr('width', 16)
                              .attr('height', 16);
-  var para = $('<p>').text(color)
+  var para = $('<p>').text(rgba + '; /* ' + hex + ' */')
                      .prepend(miniswatch)
                      .hide();
   $('#colors').prepend(para);
@@ -137,7 +138,7 @@ function crossBrowserElementPos(e) {
 	e = e || window.event;
 	var obj = e.target || e.srcElement;
 	var x = 0, y = 0;
-	while(obj.offsetParent) {
+	while (obj.offsetParent) {
 		x += obj.offsetLeft;
 		y += obj.offsetTop;
 		obj = obj.offsetParent;
@@ -168,4 +169,17 @@ if(!window.console) {
     this.log = function(str) {};
     this.dir = function(str) {};
   };
+}
+
+// 
+// via http://haacked.com/archive/2009/12/29/convert-rgb-to-hex.aspx
+// 
+// Usage:
+//      equals(colorToHex('rgb(120, 120, 240)'), '#7878f0');
+// 
+function toHex(c) {
+    var m = /rgba?\((\d+), (\d+), (\d+)/.exec(c);
+    console.log(m);
+    return m ? '#' + ( m[1] << 16 | m[2] << 8 | m[3] ).toString(16)
+             : c;
 }
