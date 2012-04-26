@@ -1,27 +1,21 @@
-var sys = require('sys')
-  , ns = require('node-static')
-  , PORT = 8083;
+var tako = require('tako')
+  , path = require('path')
+  , app = tako()
+  , PUBLIC = path.join(__dirname, 'public')
+  , PORT = 8080
+  // , PROXY_PORT = 80
 
-//
-// Create a node-static server to serve the current directory
-//
-var file = new(ns.Server)('./public', { cache: 3600 });
+app.route('/').file(PUBLIC)
+app.route('/*').files(PUBLIC)
 
-require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        file.serve(request, response, function (err, res) {
-            if (err) { // An error as occured
-                sys.error("> Error serving " + request.url + " - " + err.message);
-                response.writeHead(err.status, err.headers);
-                response.end();
-            } else { // The file was served successfully
-                sys.puts("> " + request.url + " - " + res.message);
-            }
-        });
-    });
-}).listen(PORT);
+// app.notfound.html = path.join(PUBLIC, '404.html')
 
-sys.puts("> node-static is listening on http://127.0.0.1:"+PORT);
+app.httpServer.listen(PORT)
+
+tako.version =
+  tako.version
+  || require('./node_modules/tako/package.json').version
+
+console.log('dtrejo.com Listening on http://localhost:' + PORT
+  + '/ with tako@' + tako.version + ' and node@' + process.version
+)
