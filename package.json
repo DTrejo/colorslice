@@ -6,14 +6,22 @@
   "repository": {
     "url": ""
   },
+  "domains": [
+    "colorslice.dtrejo.com"
+  ],
   "main": "colorslice.js",
   "dependencies": {
-      "node-static": "*"
+    "node-static": "*",
+    "tako": "~0.2.5"
   },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
-    "node": "*"
+    "node": "0.6.x"
   },
-  "homepage": "http://colorslice.dtrejo.com/"
+  "homepage": "http://colorslice.dtrejo.com/",
+  "subdomain": "colorslice",
+  "scripts": {
+    "start": "server.js"
+  }
 }
