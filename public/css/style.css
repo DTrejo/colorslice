@@ -65,6 +65,7 @@ canvas {
 #colors {
   margin-left: 0em;
   margin-right: 0em;
+  font-size: 0.9em;
 }
 #colors > .color {
 /* border: 1px solid #999; */
@@ -121,10 +122,6 @@ div > p:first-child {
 .delete:hover,
 .clone:hover {
   cursor: pointer;
-}
-h3,
-h3 + p {
-  display: inline;
 }
 h3 + p {
   margin-left: 1.5em;

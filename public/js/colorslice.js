@@ -33,18 +33,40 @@ $(document).ready(function() {
   $('#colors')
     .on('mouseenter', '.color', colorHoverIn)
     .on('mouseleave', '.color', colorHoverOut)
-  $('#colors').on('click', '.color .delete', function(e) {
+
+  $('.color').on('click', '.delete', function(e) {
     var slice = $(e.target).parent()
 
-    if (!slice.hasClass('template')) {
-      slice.slideUp('fast', function() {
+    slice.slideUp('fast', function() {
+      if (!slice.hasClass('template')) {
         slice.remove()
-      })
-    }
+      }
+    })
     e.preventDefault()
     return false;
   })
+  $('#colors').on('keyup', '.color span[contenteditable]', function(e) {
+    var el = $(e.target);
+    var slice = el.parent()
+    var colors = multiconvert(el.text().trim())
+    updateSlice(el, slice, colors);
+  })
 });
+
+// need the el argument b/c don't want to upset their
+// cursor with an el.text('...');
+function updateSlice(el, slice, colors) {
+  // ignore invalid updates
+  if (!colors) return
+
+  el.siblings('.hex').text(colors.hex)
+  el.siblings('.rgb').text(colors.rgb)
+  el.siblings('.hsl').text(colors.hsl)
+  slice
+    .css('background-color', colors.rgb)
+    .removeClass('black white')
+    .addClass(getContrastYIQ(colors.rgbarr))
+}
 
 function colorHoverIn(e) {
   var body = $('body')
@@ -128,7 +150,7 @@ function mouseup(event) {
   // capture pixel, display it.
   var d = swatchcontext.getImageData(0, 0, 4, 4).data;
   var colors = [ d[0], d[1], d[2], d[3] ];
-
+  var rgbarr = [ d[0], d[1], d[2] ];
   // var miniswatch = $('<img>')
   //   .attr('src', swatch.toDataURL('image/png'))
   //   .attr('width', 16)
@@ -136,15 +158,18 @@ function mouseup(event) {
 
   var css = humanizeColor(colors);
   var slice = $('#colors .template').first().clone().removeClass('template')
-    .text(css.text)
+    // .text(css.text)
     .hide()
     // .prepend(miniswatch)
 
-  var contrast = getContrastYIQ(colors);
-  console.log('adding', colors, contrast);
-  slice.addClass(contrast);
+  // so hackky lol
+  updateSlice(slice.children('span'), slice, multiconvert('rgb(' + rgbarr.join(', ') + ')'));
 
-  slice.css('background-color', css.hex);
+  // var contrast = getContrastYIQ(colors);
+  // console.log('adding', colors, contrast);
+  // slice.addClass(contrast);
+
+  // slice.css('background-color', css.rgba);
 
   $('#colors').prepend(slice);
 
@@ -257,6 +282,37 @@ function getContrastYIQ(colors) {
   var b = colors[2]
   var yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return (yiq >= 128) ? 'black' : 'white';
+}
+
+function multiconvert(text) {
+  var rgb
+  // ignore invalid updates
+  try {
+    rgb = d3.rgb(text)
+  } catch(e) {
+    return
+  }
+
+  // ignore invalid updates
+  var rgbarr = [ rgb.r, rgb.g, rgb.b ]
+  console.log('rgb', rgbarr)
+  var part
+  for (var i = 0; i < rgbarr.length; i++) {
+    part = rgbarr[i]
+    if (isNaN(part) || part < 0) {
+      return
+    }
+  }
+  var hsl = rgb.hsl()
+  var colors =
+    { hex: rgb.toString()
+    , rgb: 'rgb(' + rgbarr.join(', ') + ')'
+    , rgbarr: rgbarr
+    , hsl: 'hsl(' + [ hsl.h, hsl.s, hsl.l ].join(', ') + ')'
+    }
+
+  console.log(colors)
+  return colors
 }
 
 // function getContrastYIQHex(hexcolor) {
