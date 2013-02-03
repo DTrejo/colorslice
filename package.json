@@ -2,7 +2,7 @@
   "author": "David Trejo <david.daniel.trejo@gmail.com> (http://dtrejo.com)",
   "name": "colorslice",
   "description": "color picker for your browser using screenshots",
-  "version": "0.1.0",
+  "version": "0.1.0-2",
   "repository": {
     "url": ""
   },

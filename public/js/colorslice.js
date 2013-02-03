@@ -10,6 +10,7 @@ var mouse = { x:0
             , y:0
             };
 var image;
+var previous_bg_color; // TODO change this when theme is changed by user.
 $(document).ready(function() {
   $canvas = $('#screen');
   canvas = $canvas.get(0);
@@ -27,7 +28,40 @@ $(document).ready(function() {
   swatch = $('#swatch').get(0);
   swatchcontext = swatch.getContext('2d');
   current = $('#current');
+
+  previous_bg_color = $('body').css('background-color')
+  $('#colors')
+    .on('mouseenter', '.color', colorHoverIn)
+    .on('mouseleave', '.color', colorHoverOut)
+  $('#colors').on('click', '.color .delete', function(e) {
+    var slice = $(e.target).parent()
+
+    if (!slice.hasClass('template')) {
+      slice.slideUp('fast', function() {
+        slice.remove()
+      })
+    }
+    e.preventDefault()
+    return false;
+  })
 });
+
+function colorHoverIn(e) {
+  var body = $('body')
+  var slice = $(e.target)
+  var siblings = slice.siblings();
+
+  body.css('background-color', slice.css('background-color'))
+
+  siblings.css('border-top', slice.css('background-color'))
+  siblings.css('border-bottom', slice.css('background-color'))
+}
+function colorHoverOut(e) {
+  var body = $('body')
+  var slice = $(e.target)
+  var slices = $('.color')
+  body.css('background-color', previous_bg_color)
+}
 
 function mousemove(event) {
   // Get the mouse position relative to the canvas element.
@@ -36,10 +70,11 @@ function mousemove(event) {
   if (image) {
     var w = 20;
     var h = 20;
-    var imageData = context.getImageData( mouse.x - (w / 2)
-                                        , mouse.y - (h / 2)
-                                        , w
-                                        , h);
+    var imageData =
+      context.getImageData( mouse.x - (w / 2)
+                          , mouse.y - (h / 2)
+                          , w
+                          , h);
     var newCanvas = $('<canvas>')[0];
     newCanvas.width = imageData.width;
     newCanvas.height = imageData.height;
@@ -52,10 +87,11 @@ function mousemove(event) {
     zoomcontext.strokeRect(zoom.width / 2 - 1, zoom.width / 2 - 1, 6, 6);
 
     // now draw current pixel really big in a sidebox
-    imageData = zoomcontext.getImageData( zoom.width / 2
-                                        , zoom.height / 2
-                                        , 1
-                                        , 1);
+    imageData =
+      zoomcontext.getImageData( zoom.width / 2
+                              , zoom.height / 2
+                              , 1
+                              , 1);
     newCanvas = $('<canvas>')[0];
     newCanvas.width = imageData.width;
     newCanvas.height = imageData.height;
@@ -67,7 +103,8 @@ function mousemove(event) {
     // also put the color into the #current paragraph
     var d = swatchcontext.getImageData(0, 0, 4, 4).data;
     var colors = [ d[0], d[1], d[2], d[3] ];
-    current.text(humanizeColor(colors).split(';').join(';\n')+'\n /* click now to save */');
+    current.text(humanizeColor(colors).text.split(';').join(';\n')
+      + '\n /* click now to save */');
   }
   // testing
   // if (!started) {
@@ -85,29 +122,33 @@ function mousedown(event) {
   return cancel(event);
 }
 
-var removePlaceholder = true;
 function mouseup(event) {
+  $('#colors .template').hide();
+
   // capture pixel, display it.
   var d = swatchcontext.getImageData(0, 0, 4, 4).data;
   var colors = [ d[0], d[1], d[2], d[3] ];
 
-  var miniswatch = $('<img>')
-    .attr('src', swatch.toDataURL('image/png'))
-    .attr('width', 16)
-    .attr('height', 16);
+  // var miniswatch = $('<img>')
+  //   .attr('src', swatch.toDataURL('image/png'))
+  //   .attr('width', 16)
+  //   .attr('height', 16);
 
-  var para = $('<p>')
-    .text(humanizeColor(colors))
-    .prepend(miniswatch)
-    .hide();
+  var css = humanizeColor(colors);
+  var slice = $('#colors .template').first().clone().removeClass('template')
+    .text(css.text)
+    .hide()
+    // .prepend(miniswatch)
 
-  $('#colors').prepend(para);
+  var contrast = getContrastYIQ(colors);
+  console.log('adding', colors, contrast);
+  slice.addClass(contrast);
 
-  if (removePlaceholder) {
-      $('#colors .remove').remove();
-      removePlaceholder = false;
-  }
-  para.slideDown('fast');
+  slice.css('background-color', css.hex);
+
+  $('#colors').prepend(slice);
+
+  slice.slideDown('fast');
   // console.log(para);
 }
 
@@ -176,7 +217,7 @@ function crossBrowserRelativeMousePos(e) {
 	};
 }
 
-// stop shit from breaking if it's not there.
+// stop console from breaking if it's not there.
 if(!window.console) {
   window.console = new function() {
     this.log = function(str) {};
@@ -189,9 +230,11 @@ if(!window.console) {
 // output: "rgba(210, 229, 236, 255); /* #d2e5ec */"
 //
 function humanizeColor(colors) {
-    var rgba = 'rgba('+ colors.join(', ') + ')';
-    var hex = toHex(rgba);
-    return rgba + '; /* ' + hex + ' */';
+  var css = {}
+  css.rgba = 'rgba('+ colors.join(', ') + ')'
+  css.hex = toHex(css.rgba)
+  css.text = css.rgba + '; /* ' + css.hex + ' */'
+  return css
 }
 
 //
@@ -206,3 +249,20 @@ function toHex(c) {
     return m ? '#' + ( m[1] << 16 | m[2] << 8 | m[3] ).toString(16)
              : c;
 }
+
+// via http://24ways.org/2010/calculating-color-contrast/
+function getContrastYIQ(colors) {
+  var r = colors[0]
+  var g = colors[1]
+  var b = colors[2]
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return (yiq >= 128) ? 'black' : 'white';
+}
+
+// function getContrastYIQHex(hexcolor) {
+//   var r = parseInt(hexcolor.substr(0, 2), 16);
+//   var g = parseInt(hexcolor.substr(2, 2), 16);
+//   var b = parseInt(hexcolor.substr(4, 2), 16);
+//   var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+//   return (yiq >= 128) ? 'black' : 'white';
+// }

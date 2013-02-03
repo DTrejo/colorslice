@@ -3,99 +3,60 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="aristo/css/aristo.css" type="text/css">
-  <style type="text/css">
-    body {
-      margin: 3em auto;
-      padding: 0em;
-      font-family: Apex,"Helvetica Neue","HelveticaNeue","Lucida Grande", Helvetica, Arial, sans-serif;
-      font-size: 100%;
-      max-width: 33em;
-      color: #222;
-      background: #dfdfdf;
-    }
-    h1 > a {
-      color: #222;
-      text-decoration: none;
-    }
-    canvas {
-      background: #fff;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
-      cursor: normal;
-    }
-    #colors > p {
-      border: 1px solid #999;
-      margin: 1em;
-    }
-    code, #colors > p {
-      font-family: monaco, Andale Mono, "Courier New", monospace;
-    }
-    #colors > p > img {
-      display: inline;
-      padding: 2px;
-    }
-    .col3 {
-      width: 100%;
-      display: block;
-      overflow: hidden;
-    }
-    .col3 > div {
-      display: inline-block;
-      width: 20%;
-    }
-    .col3 > div + div + div {
-      width: 35%;
-      display: inline-table;
-      vertical-align: top;
-    }
-    #current {
-      float: left;
-    }
-  </style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 
-  <body>
+  <body class="white">
     <h1><a href="http://colorslice.dtrejo.com/">Color Slice</a></h1>
     <p>Drag and drop images from your desktop. Click to capture a color.</p>
 
-    <canvas id="screen" width="500" height="500">No canvas support. If you're
-    using IE email the creator of this and tell him he forgot to use
-    IECanvas!</canvas>
+    <div class="col2">
+      <div>
+        <canvas id="screen" width="700" height="500">No canvas support. If
+        you're using IE email the creator of this and tell him he forgot to
+        use IECanvas!</canvas>
+      </div>
 
-    <p>Click to save your color!</p>
-    <div class="col3">
       <div>
         <p>Zoom view</p>
         <canvas id="zoom" width="100" height="100"></canvas>
-      </div>
-      <div>
+
         <p>Color Swatch</p>
         <canvas id="swatch" width="100" height="100"></canvas>
-      </div>
-      <div>
+
         <p id="curtext">Current Color</p><br>
         <pre id="current">(None yet)</pre>
       </div>
     </div>
 
+
     <!-- saved swatches go here -->
-    <p>Saved Swatches</p>
-    <div id="colors">
-      <p class="remove">(None yet, click on your image to save one!)</p>
+    <div>
+      <h3>Saved Swatches </h3>
+      <p>Primary color format:
+        <label><input type="radio" name="format" value="hex">hex</label>
+        <label><input type="radio" name="format" value="hsl">hsl</label>
+        <label><input type="radio" name="format" value="hsla">hsla</label>
+        <label><input type="radio" name="format" value="rgb">rgb</label>
+        <label><input type="radio" name="format" value="rgba" checked="true">rgba</label>
+      </p>
     </div>
 
-    <h2>Supported Browsers</h2>
-    <ul>
-      <li>Chrome</li>
-      <li>Firefox</li>
-      <li>Not Safari 5 or Safari 4 (please tell me if I'm wrong!)</li>
-      <li>Not Opera</li>
-      <li>Not IE, because no drag and drop, sadly.</li>
-    </ul>
-    <p>Made by <a href="http://dtrejo.com/">David Trejo</a></p>
+    <div id="colors">
+      <div class="template color">
+        <span>(None yet, click on your image to save one!)</span>
+        <span class="U delete" href="#">&#009746;</span>
+        <span class="U clone" href="#">&#009998;</span>
+      </div>
+    </div>
 
-    <script src="jquery-1.4.2.min.js"></script>
+    <p>Made by <a href="http://dtrejo.com/">David Trejo</a> with inspiration
+    from <a href="http://whichlight.com">Kawandeep Virdee</a>.</p>
+
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="js/color-0.4.1.min.js"></script>
     <script src="js/lib/excanvas.compiled.js"></script>
     <script src="js/colorslice.js"></script>
+
   </body>
 </html>
