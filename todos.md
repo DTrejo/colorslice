@@ -30,3 +30,10 @@
 - over-the-shoulder sessions with designers (some RISD friends of mine)
 - google analytics
 - whether I accomplish the features (that we choose to be most important)
+
+---
+
+# Progress
+- after reading about SVG and color matrix transformations, http://apike.ca/prog_svg_filter_feColorMatrix.html
+  , my impression is that I won't be able to use SVG to turn e.g. green to red without
+  changing the components of the other colors in the image.
