@@ -1,21 +1,25 @@
-var tako = require('tako')
-  , path = require('path')
-  , app = tako()
-  , PUBLIC = path.join(__dirname, 'public')
-  , PORT = 8080
-  // , PROXY_PORT = 80
+var http = require('http');
+var path = require('path')
+var ErrorPage = require('error-page')
 
-app.route('/').file(PUBLIC)
-app.route('/*').files(PUBLIC)
+var ecstatic = require('ecstatic');
+var PUBLIC = path.join(__dirname + '/' + 'public')
+var static = ecstatic({ root: PUBLIC, autoIndex: true })
 
-// app.notfound.html = path.join(PUBLIC, '404.html')
+var stylus = require('./stylus')
 
-app.httpServer.listen(PORT)
+var PORT = 8080
+// var IS_PROD = process.env.NODE_ENV === 'production'
 
-tako.version =
-  tako.version
-  || require('./node_modules/tako/package.json').version
+http.createServer(function(req, res) {
+  res.error = ErrorPage(req, res, { debug: true })
 
-console.log('dtrejo.com Listening on http://localhost:' + PORT
-  + '/ with tako@' + tako.version + ' and node@' + process.version
+  return stylus(req, res, function(er) {
+    if (er) return res.error(er)
+    return static(req, res)
+  })
+}).listen(8080)
+
+console.log('serving dtrejo.com on http://localhost:' + PORT
+  + ' with ecstatic@' + ecstatic.version + ' & node@' + process.version
 )

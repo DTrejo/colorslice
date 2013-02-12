@@ -11,8 +11,10 @@
   ],
   "main": "colorslice.js",
   "dependencies": {
-    "node-static": "*",
-    "tako": "~0.2.5"
+    "stylus": "~0.32.0",
+    "ecstatic": "~0.3.2",
+    "browserify": "~1.17.3",
+    "error-page": "0.0.6"
   },
   "devDependencies": {},
   "optionalDependencies": {},
