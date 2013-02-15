@@ -52,11 +52,10 @@ $(document).ready(function() {
     updateSlice(el, slice, colors)
   })
   resize();
-  // setTimeout(resize, 100)
 });
 
-// otherwise mouse coordinates are not accurate.
-// $(window).resize(resize);
+// otherwise mouse coordinates in canvas are not accurate.
+$(window).resize(resize);
 function resize() {
   console.log('bang')
   $('canvas').each(function(i, el) {
