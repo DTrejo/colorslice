@@ -6,8 +6,8 @@ var zoomcontext;
 var swatch;
 var swatchcontext;
 var current;
-var mouse = { x:0
-            , y:0
+var mouse = { x: 0
+            , y: 0
             };
 var image;
 var previous_bg_color; // TODO change this when theme is changed by user.
@@ -46,12 +46,28 @@ $(document).ready(function() {
     return false;
   })
   $('#colors').on('keyup', '.color span[contenteditable]', function(e) {
-    var el = $(e.target);
+    var el = $(e.target)
     var slice = el.parent()
     var colors = multiconvert(el.text().trim())
-    updateSlice(el, slice, colors);
+    updateSlice(el, slice, colors)
   })
+  setTimeout(resize, 1000)
 });
+
+// otherwise mouse coordinates are not accurate.
+// $(window).resize(resize);
+function resize() {
+  console.log('bang')
+  $('canvas').each(function(i, el) {
+    var s = getComputedStyle(el)
+    var h = s.height
+    var w = s.width
+    console.log(el.width, el.offsetWidth, w, el)
+    console.log(el.height, el.offsetHeight, h, el)
+    el.width = parseInt(w, 10)
+    el.height = parseInt(h, 10)
+  })
+}
 
 // need the el argument b/c don't want to upset their
 // cursor with an el.text('...');
@@ -124,20 +140,20 @@ function mousemove(event) {
 
     // also put the color into the #current paragraph
     var d = swatchcontext.getImageData(0, 0, 4, 4).data;
-    var colors = [ d[0], d[1], d[2], d[3] ];
-    current.text(humanizeColor(colors).text.split(';').join(';\n')
-      + '\n /* click now to save */');
+    var rgbarr = [ d[0], d[1], d[2], d[3] ];
+    var colors = multiconvert('rgb(' + rgbarr.join(', ') + ')');
+    current.text([ colors.hex, colors.rgb, colors.hsl ].join('\n'));
   }
   // testing
   // if (!started) {
-  //     context.lineJoin = 'round';
-  //     context.beginPath();
-  //     context.moveTo(mouse.x, mouse.y);
-  //     started = true;
-  //   } else {
-  //     context.lineTo(mouse.x, mouse.y);
-  //     context.stroke();
-  //   }
+  //   context.lineJoin = 'round';
+  //   context.beginPath();
+  //   context.moveTo(mouse.x, mouse.y);
+  //   started = true;
+  // } else {
+  //   context.lineTo(mouse.x, mouse.y);
+  //   context.stroke();
+  // }
 }
 
 function mousedown(event) {
@@ -178,25 +194,35 @@ function mouseup(event) {
 }
 
 function drop(event) {
-  var file = event.dataTransfer.files[0];
-  var reader = new FileReader();
-  console.log(file);
+  var file = event.dataTransfer.files[0]
+  var reader = new FileReader()
+  console.log(file)
 
   reader.onload = function (event) {
-    image = document.createElement('img');
+    image = document.createElement('img')
     image.onload = function () {
+      var self = this;
       var ratio;
-      if (this.width > this.height) {
-        ratio = this.height / this.width; // less than 1
-        context.drawImage( this, 0, 0
-                         , canvas.width
-                         , canvas.height * ratio);
+
+      // cases
+      // image dimensions smaller than the canvas
+      // - stretch the image to the canvas
+      // image dimensions bigger than the canvas
+      // - shrink the image to the canvas
+      //
+      // always maintain aspect ratio of the image.
+      // determine the amount of stretching by choosing the longest side,
+      // and scaling the image to fit snugly into the canvas based on this.
+      var ratio;
+      if (self.width > self.height) {
+        ratio = canvas.width / self.width
       } else {
-        ratio = this.width / this.height;
-        context.drawImage( this, 0, 0
-                         , ratio * canvas.width // canvas is square.
-                         , canvas.height);
+        ratio = canvas.height / self.height
       }
+      // TODO fails when divides by 0
+      context.drawImage( self, 0, 0
+                       , self.width * ratio
+                       , self.height * ratio)
     };
 
     image.src = event.target.result;
@@ -295,7 +321,7 @@ function multiconvert(text) {
 
   // ignore invalid updates
   var rgbarr = [ rgb.r, rgb.g, rgb.b ]
-  console.log('rgb', rgbarr)
+  // console.log('rgb', rgbarr)
   var part
   for (var i = 0; i < rgbarr.length; i++) {
     part = rgbarr[i]
@@ -308,12 +334,17 @@ function multiconvert(text) {
     { hex: rgb.toString()
     , rgb: 'rgb(' + rgbarr.join(', ') + ')'
     , rgbarr: rgbarr
-    , hsl: 'hsl(' + [ hsl.h, hsl.s, hsl.l ].join(', ') + ')'
+    , hsl: 'hsl(' + [ precision(hsl.h, 2), precision(hsl.s, 2), precision(hsl.l, 2) ].join(', ') + ')'
     }
 
-  console.log(colors)
+  // console.log(colors)
   return colors
 }
+
+function precision(num, decimals) {
+  var factor = Math.pow(10, decimals);
+  return Math.round(num * factor) / factor;
+};
 
 // function getContrastYIQHex(hexcolor) {
 //   var r = parseInt(hexcolor.substr(0, 2), 16);
