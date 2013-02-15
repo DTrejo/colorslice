@@ -51,7 +51,8 @@ $(document).ready(function() {
     var colors = multiconvert(el.text().trim())
     updateSlice(el, slice, colors)
   })
-  setTimeout(resize, 1000)
+  resize();
+  // setTimeout(resize, 100)
 });
 
 // otherwise mouse coordinates are not accurate.
@@ -142,7 +143,11 @@ function mousemove(event) {
     var d = swatchcontext.getImageData(0, 0, 4, 4).data;
     var rgbarr = [ d[0], d[1], d[2], d[3] ];
     var colors = multiconvert('rgb(' + rgbarr.join(', ') + ')');
-    current.text([ colors.hex, colors.rgb, colors.hsl ].join('\n'));
+    current.text([ colors.hex
+                 , colors.rgb
+                 , colors.hsl.split('(').join('(\n')
+                    .split(')').join('\n)').split(', ').join(', \n')
+                  ].join('\n'));
   }
   // testing
   // if (!started) {
@@ -223,10 +228,10 @@ function drop(event) {
       context.drawImage( self, 0, 0
                        , self.width * ratio
                        , self.height * ratio)
-    };
+    }
 
     image.src = event.target.result;
-  };
+  }
 
   reader.readAsDataURL(file);
   return cancel(event);
@@ -330,15 +335,22 @@ function multiconvert(text) {
     }
   }
   var hsl = rgb.hsl()
+  console.log(hsl);
   var colors =
     { hex: rgb.toString()
     , rgb: 'rgb(' + rgbarr.join(', ') + ')'
     , rgbarr: rgbarr
-    , hsl: 'hsl(' + [ precision(hsl.h, 2), precision(hsl.s, 2), precision(hsl.l, 2) ].join(', ') + ')'
+    , hsl: 'hsl('
+      + [ precision(hsl.h, 2), toPercent(hsl.s), toPercent(hsl.l) ].join(', ')
+      + ')'
     }
 
   // console.log(colors)
   return colors
+}
+
+function toPercent(num) {
+  return precision(num * 100, 2) + '%';
 }
 
 function precision(num, decimals) {
