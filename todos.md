@@ -18,11 +18,13 @@
     - image uploaded, included in URL, so can link to both color palette and
       image
 - sample a larger, averaged patch of pixels instead of just one pixel.
-- layout that fully uses screen-space
+- √layout that fully uses screen-space
+- canvas should be more "droppable" / have better instructions. the
+  drop target should expand to the whole screen like hakeru used to.
 
 ## Backend todos
-- use hapi.js
-- use stylus
+- √use hapi.js
+- √use stylus
 - use browserify
 - maybe use one of the component framework things, if browserify doesnt have it
 
