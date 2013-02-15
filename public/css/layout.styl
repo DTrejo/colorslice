@@ -1,0 +1,37 @@
+.grid {
+  /*  As of August 2012, only supported in Chrome 21+ */
+  display: -webkit-flex;
+  display: flex;
+
+  display: box; /* OLD */
+
+  min-width: 950px;
+}
+.fluid {
+  flex: 1;
+  box-flex: 1; /* OLD */
+  background: #ccc;
+}
+.fixed {
+  margin-left: 1.5em;
+  width: 200px;
+}
+.grid > canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.fixed canvas:first-child {
+  height: 30%;
+  min-width: 100%;
+  max-width: 194px;
+  display: block;
+}
+.fixed canvas + canvas, .fixed canvas + canvas + pre {
+  height: 30%;
+  min-width: 100%;
+  max-width: 194px;
+  display: block;
+
+  margin-top: 1.5em;
+}
