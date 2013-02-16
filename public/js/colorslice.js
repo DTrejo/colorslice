@@ -1,3 +1,7 @@
+require('./jquery-1.9.0.min.js')
+require('./d3.v3.min.js')
+require('./lib/excanvas.compiled.js')
+
 var started = false;
 var canvas;
 var context;

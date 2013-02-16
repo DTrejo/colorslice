@@ -1,17 +1,20 @@
-var http = require('http');
+var http = require('http')
 var path = require('path')
 
 var ErrorPage = require('error-page')
-var ecstatic = require('ecstatic');
+var ecstatic = require('ecstatic')
 
 var PUBLIC = path.join(__dirname + '/' + 'public')
 var PORT = 8080
 // var IS_PROD = process.env.NODE_ENV === 'production'
 
 var static = ecstatic({ root: PUBLIC, autoIndex: true })
+
+// recompile .styl files on change
 var stylus = require('stylus').middleware({ src: PUBLIC })
 
-
+// recompile js bundle on change
+require('./browserifyWatcher')(path.join(PUBLIC, 'js', 'colorslice.js'))
 
 http.createServer(function(req, res) {
   res.error = ErrorPage(req, res, { debug: true })
