@@ -23,4 +23,5 @@ function browserifyWatcher (mainjs) {
     console.log('Updated bundle -', b.modified.toISOString()
       , '-', path.relative(path.dirname(module.parent.filename), output))
   }
+  return b;
 }
