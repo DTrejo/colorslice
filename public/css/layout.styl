@@ -1,22 +1,26 @@
 .grid {
-  /*  As of August 2012, only supported in Chrome 21+ */
+  /* OLD. Only here for firefox. only just makes firefox UI usuable. */
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  /* As of August 2012, only supported in Chrome 21+ */
   display: -webkit-flex;
+  display: -moz-flex;
   display: flex;
 
-  display: box; /* OLD */
-
   min-width: 950px;
-}
-.fluid {
-  flex: 1;
-  box-flex: 1; /* OLD */
-  background: #ccc;
 }
 .fixed {
   margin-left: 1.5em;
   width: 150px;
 }
 .grid > canvas {
+  /* OLD. Only here for firefox. only just makes firefox UI usuable. */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+
   display: block;
   height: 100%;
   width: 100%;
