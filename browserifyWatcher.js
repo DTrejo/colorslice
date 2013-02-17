@@ -15,6 +15,8 @@ function browserifyWatcher (mainjs) {
   var newname = path.basename(mainjs, '.js') + '.min.js'
   var output = path.join(path.dirname(mainjs), newname)
 
+  onBundle() // force-regen the first time, like when deployed
+
   b.on('bundle', onBundle);
   function onBundle() {
     fs.writeFile(output, b.bundle(), 'utf8', onWrite);
