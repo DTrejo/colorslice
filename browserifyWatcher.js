@@ -9,7 +9,7 @@ var browserify = require('browserify')
 // dir/filename.js -> dir/filename.min.js
 //
 function browserifyWatcher (mainjs) {
-  var b = browserify({ watch: true })
+  var b = browserify({ watch: true, debug: true })
   b.addEntry(mainjs)
 
   var newname = path.basename(mainjs, '.js') + '.min.js'
