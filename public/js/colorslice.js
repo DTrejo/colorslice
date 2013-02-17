@@ -22,9 +22,6 @@ var mouse = { x: 0
 var image;
 var rack;
 
-// keeps mouse coordinates accurate
-$(window).resize(setComputedCanvasSize);
-
 $(document).ready(function() {
   $canvas = $('#screen');
   canvas = $canvas.get(0);
@@ -47,6 +44,9 @@ $(document).ready(function() {
 
   setComputedCanvasSize()
 });
+
+// keeps mouse coordinates accurate
+$(window).resize(setComputedCanvasSize);
 
 
 function mousemove(event) {
