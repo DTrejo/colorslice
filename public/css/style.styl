@@ -81,8 +81,11 @@ canvas {
   padding: .75em;
   padding-left: 48px;
 }
-#colors > .color:hover {
-  /* border: 1px solid white; */
+.color > span {
+  border: 1px dashed rgba(0,0,0,0);
+}
+.color > span:hover {
+  border: 1px dashed rgba(0,0,0,.5);
 }
 code, #colors {
   font-family: monaco, Andale Mono, "Courier New", monospace;
