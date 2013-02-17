@@ -23,8 +23,7 @@
   drop target should expand to the whole screen like hakeru used to.
 
 ## Backend todos
-- √use hapi.js
-- √use stylus
+
 - use browserify
 - maybe use one of the component framework things, if browserify doesnt have it
 
@@ -39,3 +38,13 @@
 - after reading about SVG and color matrix transformations, http://apike.ca/prog_svg_filter_feColorMatrix.html
   , my impression is that I won't be able to use SVG to turn e.g. green to red without
   changing the components of the other colors in the image.
+- √simplify server-side; raw node w/ a few modules.
+- √use stylus
+
+# Next up
+no anti-alias-ing when rendering. seems like this will work
+  http://stackoverflow.com/questions/8597081/how-to-stretch-images-with-no-antialiasing
+  http://jsfiddle.net/alnitak/j8YTe/
+
+modularize & browserify client-side, colors in URL, large drop target,
+obvious editability of the swatches.
