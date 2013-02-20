@@ -15,7 +15,11 @@ function browserifyWatcher (mainjs) {
   var newname = path.basename(mainjs, '.js') + '.min.js'
   var output = path.join(path.dirname(mainjs), newname)
 
-  onBundle() // force-regen the first time, like when deployed
+  // force-regen on startup, like when deployed
+  fs.exists(output, function(exists) {
+    if (exists) return
+    onBundle()
+  })
 
   b.on('bundle', onBundle);
   function onBundle() {
