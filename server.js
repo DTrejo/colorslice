@@ -13,8 +13,11 @@ var static = ecstatic({ root: PUBLIC, autoIndex: true })
 // recompile .styl files on change
 var stylus = require('stylus').middleware({ src: PUBLIC })
 
-// recompile js bundle on change
-require('./browserifyWatcher')(path.join(PUBLIC, 'js', 'colorslice.js'))
+// recompile js bundles on change
+var jsfiles =
+  [ path.join(PUBLIC, 'js', 'colorslice.js')
+  , path.join(PUBLIC, 'js', 'recolor.js') ]
+require('./browserifyWatcher')(jsfiles)
 
 http.createServer(function(req, res) {
   res.error = ErrorPage(req, res, { debug: true })

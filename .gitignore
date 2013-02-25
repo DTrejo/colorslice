@@ -1,3 +1,4 @@
 node_modules
 *.css
 public/js/colorslice.min.js
+public/js/recolor.min.js
