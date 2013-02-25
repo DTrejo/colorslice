@@ -13,17 +13,20 @@ function recolor (imageData, ocolor, ncolor) {
   var h = imageData.height
   var w = imageData.width
 
+  var color = new d3.rgb(0,0,0)
   for (var y = 0; y < h; ++y) {
     for (var x = 0; x < w; ++x) {
         var index = (y * w + x) * 4;
-        var red = imageData.data[index]
-        var green = imageData.data[index+1]
-        var blue = imageData.data[index+2]
+        color.r = imageData.data[index]
+        color.g = imageData.data[index+1]
+        color.b = imageData.data[index+2]
         var alpha = imageData.data[index+3]
-        var average = (red+green+blue)/3
-        imageData.data[index] = average
-        imageData.data[index+1] = average
-        imageData.data[index+2] = average
+
+        color = color.brighter()
+
+        imageData.data[index] = color.r
+        imageData.data[index+1] = color.g
+        imageData.data[index+2] = color.b
         imageData.data[index+3] = alpha
     }
   }
