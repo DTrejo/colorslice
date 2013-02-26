@@ -37,7 +37,7 @@ function Rack(body, container) {
   })
 
   // delete
-  $(container + ' .color').on('click', '.delete', function(e) {
+  self.container.on('click', '.delete', function(e) {
     return self.deleteSlice(e)
   })
 }
