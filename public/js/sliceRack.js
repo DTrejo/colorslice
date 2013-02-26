@@ -29,17 +29,23 @@ function Rack(body, container) {
     })
 
   // edit/update
-  self.container.on('keyup', '.color span[contenteditable]', function(e) {
+  self.container.on('keyup', '.color .formats [contenteditable]', function(e) {
     var el = $(e.target)
-    var slice = el.parent()
+    var slice = el.parent().parent()
     var colors = str2colors(el.text().trim())
     self.updateSlice(el, slice, colors)
   })
 
   // delete
   self.container.on('click', '.delete', function(e) {
-    return self.deleteSlice(e)
+    var slice = $(e.target).parent().parent()
+    return self.deleteSlice(slice)
   })
+
+  // to get the template to have the right color
+  var input =
+    self.container.find('.color.template .formats span')
+  input.trigger('keyup')
 }
 
 Rack.prototype.addSlice = function addSlice(rgbarr) {
@@ -52,7 +58,7 @@ Rack.prototype.addSlice = function addSlice(rgbarr) {
       .hide()
 
   var colors = str2colors('rgb(' + rgbarr.join(', ') + ')')
-  self.updateSlice(slice.children('span'), slice, colors)
+  self.updateSlice(slice.children().children('span'), slice, colors)
 
   self.container.prepend(slice)
 
@@ -74,9 +80,7 @@ Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
     .addClass(bestContrastYIQ(colors.rgbarr))
 }
 
-Rack.prototype.deleteSlice = function deleteSlice(e) {
-  var slice = $(e.target).parent()
-
+Rack.prototype.deleteSlice = function deleteSlice(slice) {
   slice.slideUp('fast', function() {
     // never remove the template
     if (slice.hasClass('template')) return

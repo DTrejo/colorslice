@@ -24,6 +24,12 @@ body.white {
 .color.black:hover {
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5);
 }
+.color.black span[contenteditable] {
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+.color.black span[contenteditable]:hover {
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+}
 
 .color.white {
   color: white;
@@ -31,6 +37,13 @@ body.white {
 .color.white:hover {
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
+.color.white span[contenteditable] {
+  border-bottom: 2px solid rgba(255, 255, 255, 0);
+}
+.color.white span[contenteditable]:hover {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+
 
 body.black {
   color: #fff;
@@ -81,12 +94,6 @@ canvas {
   padding: .75em;
   padding-left: 48px;
 }
-.color > span[contenteditable] {
-  border: 1px dashed rgba(0,0,0,0);
-}
-.color > span[contenteditable]:hover {
-  border: 1px dashed rgba(0,0,0,0.5);
-}
 code, #colors {
   font-family: monaco, Andale Mono, "Courier New", monospace;
 }
@@ -97,27 +104,15 @@ code, #colors {
 .col3, .col2 {
   width: 100%;
   display: block;
-  overflow: hidden;
-}
-.col2 {
-  width: 1024px;
-}
-.col3 > div {
-  display: inline-block;
-  width: 20%;
-}
-.col3 > div + div + div {
-  width: 35%;
-  display: inline-table;
-  vertical-align: top;
+  // overflow: hidden;
 }
 .col2 > div {
   display: inline-block;
+  width: 20%;
 }
 .col2 > div + div {
   display: inline-table;
   vertical-align: top;
-  margin-left: 3em;
 }
 #current {
   float: left;
