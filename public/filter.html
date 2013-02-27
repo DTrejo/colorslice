@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="aristo/css/aristo.css" type="text/css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+  <body>
+
+  <svg id="circle" height="200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+    <filter id="drop-shadow">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+    </filter>
+    </defs>
+      <circle id="greencircle" cx="30" cy="30" r="30" fill="green" filter="url(#drop-shadow)" />
+
+      <!-- yes this works :) -->
+      <!-- <image width="20" height="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" filter="url(#drop-shadow)"/> -->
+
+  </svg>
+
+  </body>
+</html>
