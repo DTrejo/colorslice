@@ -20,7 +20,7 @@ function str2colors(text) {
     }
   }
   var hsl = rgb.hsl()
-  console.log(hsl);
+  // console.log(hsl);
   var colors =
     { hex: rgb.toString()
     , rgb: 'rgb(' + rgbarr.join(', ') + ')'
