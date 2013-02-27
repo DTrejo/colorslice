@@ -23,7 +23,7 @@ function browserifyWatcher (jsfiles) {
 
     // force-regen on startup, like when deployed
     fs.exists(output, function(exists) {
-      if (exists) return
+      // if (exists) return // run.js interacts strangely with browserify :|
       onBundle()
     })
 
@@ -31,7 +31,8 @@ function browserifyWatcher (jsfiles) {
     function onBundle() {
       fs.writeFile(output, b.bundle(), 'utf8', onWrite);
     }
-    function onWrite () {
+    function onWrite (err) {
+      if (err) console.log(err.stack)
       console.log('Updated bundle -', b.modified.toISOString()
         , '-', prettypath)
     }
