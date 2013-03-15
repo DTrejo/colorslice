@@ -17,9 +17,12 @@ function Rack(body, container) {
   var self = this
   self.body = $(body)
   self.container = $(container)
+  debug('self.body', self.body[0])
+  debug('self.container', self.container[0])
 
   // TODO change this when theme is changed by user.
   self.previous_bg_color = self.body.css('background-color')
+  debug('self.previous_bg_color', self.previous_bg_color)
 
   // attach handlers
   self.container
@@ -31,77 +34,27 @@ function Rack(body, container) {
     })
 
   // edit/update
-  self.container.on('keyup', '.color .formats [contenteditable]', function(e) {
+  self.container.on('keyup', '.color .c', function(e) {
     var el = $(e.target)
-    var slice = el.parent().parent()
+    var slice = el.parent()
     var colors = str2colors(el.text().trim())
+    debug('keyup .color .c', el[0], slice[0], colors)
     self.updateSlice(el, slice, colors)
   })
 
   // delete
   self.container.on('click', '.delete', function(e) {
+    debug('click .delete')
     var slice = $(e.target).parent().parent()
     return self.deleteSlice(slice)
   })
 
   // to get the template to have the right color
   var input =
-    self.container.find('.color.template .formats span')
+    self.container.find('.color.template .c').first()
   input.trigger('keyup')
-
-  //
-  // recolor related
-  //
-  var wait = 1000
-  self.container
-    .on('keyup blur',  '.color .recolor .ncolor', _.debounce(self.recolorImage, wait))
-    .on('keyup', '.color .recolor .top', _.debounce(self.recolorImage, wait))
-    .on('keyup', '.color .recolor .bot', _.debounce(self.recolorImage, wait))
+  debug('.color.template .c:first', input[0])
 }
-
-// ocolor is the color of the current swatch.
-// ocolor will be swapped out for ncolor
-var last = '' // so we don't recalc the same image, and slow stuff down.
-var lastImageData
-var original
-Rack.prototype.recolorImage = function recolorImage (e) {
-  var self = this
-  console.log('attempt recolorImage')
-  var recolordiv = $(e.target).parent()
-  var top = parseInt(recolordiv.children('.top').text(), 10);
-  var bot = parseInt(recolordiv.children('.bot').text(), 10);
-  if (top < 0 || bot < 0
-    || isNaN(top) || isNaN(bot)) {
-    console.log('invalid top or bottom range:', top, bot)
-    return
-  }
-
-  var el = recolordiv.parent().find('.hex')
-  var ocolor = d3.hsl(el.text())
-  el = recolordiv.children('.ncolor')
-  var ncolor = d3.hsl(el.text())
-  if (!ocolor || !ncolor) {
-    console.log('invalid original or new color:', ocolor, ncolor)
-    return
-  }
-
-  var canvas = $('#screen')[0]
-  console.log(canvas)
-  var ctx = canvas.getContext('2d')
-  curImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-  var hash = [ocolor, ncolor, top, bot].join('')
-  if (last === hash && lastImageData === curImage) {
-    console.log('no change needed')
-    return
-  }
-  last = hash
-  lastImageData = curImage
-
-  console.log('recolor', ocolor, ncolor, top, bot)
-  var newImage = recolor(curImage, ocolor, ncolor, top, bot)
-  ctx.putImageData(newImage, 0, 0, 0, 0, newImage.width, newImage.height)
-};
 
 Rack.prototype.addSlice = function addSlice(rgbarr) {
   var self = this
@@ -134,6 +87,7 @@ Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
     .css('background-color', colors.rgb)
     .removeClass('black white')
     .addClass(bestContrastYIQ(colors.rgbarr))
+  debug('updateSlice', slice[0])
 }
 
 Rack.prototype.deleteSlice = function deleteSlice(slice) {
@@ -146,12 +100,22 @@ Rack.prototype.deleteSlice = function deleteSlice(slice) {
 }
 
 Rack.prototype.colorHoverIn = function colorHoverIn(e) {
+  debug('colorHoverIn', e.target)
   var self = this
   var slice = $(e.target)
   self.body.css('background-color', slice.css('background-color'))
 }
 
 Rack.prototype.colorHoverOut = function colorHoverOut(e) {
+  debug('colorHoverOut', e.target)
   var self = this
   self.body.css('background-color', self.previous_bg_color)
+}
+
+function debug() {
+  // console.log(DEBUG)
+  // var DEBUG = DEBUG || ''
+  // if (~DEBUG.toLowerCase().indexOf('slicerack')) {
+    console.log.apply(console, arguments)
+  // }
 }

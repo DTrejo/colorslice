@@ -28,33 +28,40 @@
       </div>
     </div>
 
-    <!-- saved swatches go here -->
-    <div>
-      <h3>Saved Swatches (click your image to save one!)</h3>
-      <!-- <p>Primary color format:
-        <label><input type="radio" name="format" value="hex" checked="true">hex</label>
-        <label><input type="radio" name="format" value="hsl">hsl</label>
-        <label><input type="radio" name="format" value="hsla">hsla</label>
-        <label><input type="radio" name="format" value="rgb">rgb</label>
-        <label><input type="radio" name="format" value="rgba">rgba</label>
-      </p> -->
+    <div class="headings">
+      <h3>Swatches (click image to save)</h3>
+      <h3>Search &amp; Replace</h3>
     </div>
+    <!-- <p>Primary color format:
+      <label><input type="radio" name="format" value="hex" checked="true">hex</label>
+      <label><input type="radio" name="format" value="hsl">hsl</label>
+      <label><input type="radio" name="format" value="hsla">hsla</label>
+      <label><input type="radio" name="format" value="rgb">rgb</label>
+      <label><input type="radio" name="format" value="rgba">rgba</label>
+    </p> -->
 
-    <div id="colors">
-      <div class="template color col2">
-        <div class="formats">
-          <span contenteditable=true class="hex">#046284</span><br>
-          <span contenteditable=true class="rgb">rgb(4, 98, 132)</span><br>
-          <span contenteditable=true class="hsl">hsl(195.94, 94.12%, 26.67%)</span><br>
+    <div class="col2">
+      <!-- saved swatches go here -->
+      <div id="colors">
+        <div class="template color">
+          <br><span contenteditable=true class="c hex">#046284</span><br>
+          <span contenteditable=true class="c rgb">rgb(4, 98, 132)</span><br>
+          <span contenteditable=true class="c hsl">hsl(195.94, 94.12%, 26.67%)</span><br>
           <!-- <span class="U clone" href="#">&#009998;</span> -->
-          <span class="U delete" href="#">&#009746;</span>
+          <span class="U delete">&#009746;</span>
         </div>
-        <div class="recolor">
-          Replace this slice with the color:
-          <span class="ncolor" contenteditable=true>red</span><br>
-          Upper Range: <span class="top" contenteditable=true>0</span><br>
-          Lower Range: <span class="bot" contenteditable=true>0</span>
-        </div>
+      </div>
+
+      <div id="recolors">
+        <ol>
+          <li class="recolor">
+            <input type="checkbox" checked> <span class="U delete">&#009746;</span>
+            Find <span class="c ocolor" contenteditable=true>blue</span>,
+            replace with <span class="c ncolor" contenteditable=true>red</span>.
+            Match nearby colors within <span class="range" contenteditable=true>0
+            </span> hue points.
+          </li>
+        </ol>
       </div>
     </div>
 
