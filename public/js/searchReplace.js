@@ -114,5 +114,5 @@ SearchReplace.prototype.blankify = function blankify (el) {
 }
 
 function debug() {
-  console.log.apply(console, arguments)
+  // console.log.apply(console, arguments)
 }

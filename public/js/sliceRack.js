@@ -112,5 +112,5 @@ Rack.prototype.colorHoverOut = function colorHoverOut(e) {
 }
 
 function debug() {
-  console.log.apply(console, arguments)
+  // console.log.apply(console, arguments)
 }
