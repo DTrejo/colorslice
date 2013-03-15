@@ -2,11 +2,9 @@ module.exports = createRack
 
 require('./lib/jquery-1.9.0.min.js')
 require('./lib/d3.v3.min.js')
-var _ = require('./lib/underscore.js')
 var cancel = require('./cancel')
 var bestContrastYIQ = require('./bestContrastYIQ')
 var str2colors = require('./str2colors')
-var recolor = require('./recolor')
 
 // body and container are jquery selectors
 function createRack(body, container) {
