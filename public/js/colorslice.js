@@ -1,12 +1,17 @@
 require('./lib/jquery-1.9.0.min.js')
 require('./lib/d3.v3.min.js')
 require('./lib/excanvas.compiled.js')
-var crossBrowserRelativeMousePos = require('./crossBrowserRelativeMousePos')
-var bestContrastYIQ = require('./bestContrastYIQ')
 var setComputedCanvasSize = require('./setComputedCanvasSize')
-var cancel = require('./cancel')
+
+// widgets
 var createSliceRack = require('./sliceRack')
+var createSearchReplace = require('./searchReplace')
+
+// TODO factor out the drag & drop
+// TODO factor out color sampling
+var crossBrowserRelativeMousePos = require('./crossBrowserRelativeMousePos')
 var str2colors = require('./str2colors')
+var cancel = require('./cancel')
 
 var started = false;
 var canvas;
@@ -41,13 +46,13 @@ $(document).ready(function() {
   current = $('#current')
 
   rack = createSliceRack('body', '#colors')
+  var searchAndReplace = createSearchReplace('#recolors', '#screen')
 
   setComputedCanvasSize()
 });
 
 // keeps mouse coordinates accurate
 $(window).resize(setComputedCanvasSize);
-
 
 function mousemove(event) {
   // get mouse position relative to the canvas element
