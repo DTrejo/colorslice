@@ -18,59 +18,32 @@ function SearchReplace(container, canvas) {
   self.container = $(container)
   self.canvas = $(canvas)
 
-  // these are used to prevent recoloring if nothing will change.
-  // holds the original image.
-  self.original = null             // allows undo
-  self.lastImageData = null        // detects changes to original image
-  self.previousReplacements = null // detects changes to replacements
-
-  var wait = 1000
-  self.container
-    .on('keyup blur',  '.c', _.debounce(doRecolor, wait))
-    .on('keyup', '.range', _.debounce(doRecolor, wait))
-  // jquery screws with the "this" context of the fn
-  function doRecolor(e) {
-    self.recolorImage(e)
-  }
+  self.container.find('button.add').on('click', function(e) {
+    self.addSR()
+  });
+  self.container.on('click', '.delete', function(e) {
+    var el = $(e.target).parent()
+    if (el.hasClass('template')) return self.blankify(el.hide())
+    el.slideUp(100, function() {
+      el.remove()
+    })
+  });
+  self.container.find('button.apply').on('click', function() {
+    self.recolorImage()
+  });
 }
 
 SearchReplace.prototype.recolorImage = function recolorImage (e) {
   var self = this
-  // if a single replacement is invalid, and ignore update
-  var replacements = self.gatherReplacements()
 
-  // if there is no blank replacement div at the end of the list, add one
-  if (null != replacements[replacements.length - 1]) {
-    var template = self.container.find('.template').first()
-    a.equal(template.length, 1)
-    var clone = template.clone().removeClass('template').hide()
-    clone.find('.ocolor, .ncolor').val('')
-    clone.find('.range').val('0')
-    self.container.find('ol').append(clone)
-    clone.fadeIn()
-  }
-  replacements = replacements.filter(identity) // ignore "blank" ones
+  var replacements = self.gatherReplacements()
+  // if a single replacement is invalid or blank, and ignore it
+  replacements = replacements.filter(identity)
 
   var canvas = self.canvas[0]
   debug(canvas)
   var ctx = canvas.getContext('2d')
   curImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-  // if the canvas has a new image added to it, the original image is cleared
-  // by the drag+drop code.
-  // This also saves the original image to allow undo-ing.
-  if (!self.original) {
-    debug('original = curImage')
-    self.original = curImage
-  } else {
-    // if all replacements and original are the same as last time, ignore update
-    if (deepEqual(replacements, self.previousReplacements)) {
-      // TODO: this never short-circuits b/c the are never deepequal :/
-      debug('replacements are the same, original image has not changed')
-      return
-    }
-  }
-  self.previousReplacements = replacements
 
   debug('recolor', replacements)
   var newImage = recolor(curImage, replacements)
@@ -121,6 +94,23 @@ SearchReplace.prototype.gatherReplacement = function gatherReplacement(el) {
     , top: range
     , bot: range
   }
+}
+
+SearchReplace.prototype.addSR = function addSR () {
+  var self = this
+  var template = self.container.find('.template').first()
+  a.equal(template.length, 1)
+  var clone = template.clone().removeClass('template').hide()
+  self.blankify(clone)
+  self.container.find('ol').append(clone)
+  clone.slideDown(100)
+}
+
+// won't show up in the replacements list, b/c blank
+SearchReplace.prototype.blankify = function blankify (el) {
+  el.find('.ocolor, .ncolor').val('')
+  el.find('.range').val('0')
+  return true
 }
 
 function debug() {
