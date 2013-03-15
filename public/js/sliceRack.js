@@ -65,7 +65,7 @@ Rack.prototype.addSlice = function addSlice(rgbarr) {
       .hide()
 
   var colors = str2colors('rgb(' + rgbarr.join(', ') + ')')
-  self.updateSlice(slice.children().children('span'), slice, colors)
+  self.updateSlice(slice.children('.c'), slice, colors)
 
   self.container.prepend(slice)
 
@@ -75,6 +75,7 @@ Rack.prototype.addSlice = function addSlice(rgbarr) {
 // need the el argument b/c don't want to upset or move their
 // cursor with an el.text('...');
 Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
+  debug(el[0],'|', slice[0], '|', colors)
   // ignore invalid updates
   if (!colors) return
 
