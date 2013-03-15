@@ -28,8 +28,8 @@ function recolor (imageData, replacements) {
 
   // convert top and bottom range to hues
   replacements = replacements.map(function(rep) {
-    rep.tophue = rep.ocolor.h + rep.top
-    rep.bothue = rep.ocolor.h - rep.bot
+    rep.tophue = (rep.ocolor.h + rep.top) % 360
+    rep.bothue = (rep.ocolor.h - rep.bot) % 360
     return rep
   })
 
@@ -48,11 +48,15 @@ function recolor (imageData, replacements) {
       hsl = d3.hsl(rgb)
       for (r = 0, len = replacements.length; r < len; r++) {
         rep = replacements[r]
+        // TODO: do wrap-around math, b/c hue is 0-360 and wraps around
         if (rep.tophue >= hsl.h && hsl.h >= rep.bothue) {
           // TODO is hue linear
           // if something is -5 hue away from the searched hue, replace with
           // the new hue, but subtract 5 from the new hue.
           hsl.h = rep.ncolor.h + hsl.h - rep.ocolor.h
+          // hsl.s = rep.ncolor.s + hsl.s - rep.ocolor.s
+          // changing luminance doesn't make sense.
+          // hsl.l = rep.ncolor.l + hsl.l - rep.ocolor.l
           rgb = hsl.rgb()
 
           imageData.data[index] = rgb.r
@@ -94,12 +98,22 @@ if (window.location.pathname === '/recolor.html') {
     // You'll get security error if you do.
     imageData = ctx.getImageData(0, 0, iw, ih)
 
-    var replacements = [{
+    var replacements = [
+    {
+      ocolor: d3.hsl('rgb(252, 232, 173)'),
+      ncolor: d3.hsl('green'),
+      top: 20,
+      bot: 20
+    }
+    ,
+    {
       ocolor: d3.hsl('rgb(252, 232, 173)'),
       ncolor: d3.hsl('blue'),
-      top: 20,
+      top: 50,
       bot: 50
-    }]
+    }
+    ]
+    console.log(replacements[0], replacements[1])
     ctx.putImageData(recolor(imageData, replacements), 0, 0, 0, 0
       , imageData.width, imageData.height)
     // var newurl = canvas.toDataURL()
