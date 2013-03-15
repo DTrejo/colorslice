@@ -49,8 +49,7 @@ function recolor (imageData, ocolor, ncolor, top, bot) {
   return imageData
 }
 
-// see /recolor.html
-if (!module.parent) {
+if (window.location.pathname === '/recolor.html') {
   require('./lib/jquery-1.9.0.min.js')
 
   $(function() {
