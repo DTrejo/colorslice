@@ -43,8 +43,8 @@ function Rack(body, container) {
   // delete
   self.container.on('click', '.delete', function(e) {
     debug('click .delete')
-    var slice = $(e.target).parent().parent()
-    return self.deleteSlice(slice)
+    var slice = $(e.target).parent()
+    self.deleteSlice(slice)
   })
 
   // to get the template to have the right color
@@ -90,12 +90,12 @@ Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
 }
 
 Rack.prototype.deleteSlice = function deleteSlice(slice) {
+  debug('deleteSlice', slice)
   slice.slideUp('fast', function() {
     // never remove the template
     if (slice.hasClass('template')) return
     slice.remove()
   })
-  return cancel(e)
 }
 
 Rack.prototype.colorHoverIn = function colorHoverIn(e) {
@@ -112,5 +112,5 @@ Rack.prototype.colorHoverOut = function colorHoverOut(e) {
 }
 
 function debug() {
-  // console.log.apply(console, arguments)
+  console.log.apply(console, arguments)
 }
