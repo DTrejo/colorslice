@@ -112,9 +112,5 @@ Rack.prototype.colorHoverOut = function colorHoverOut(e) {
 }
 
 function debug() {
-  // console.log(DEBUG)
-  // var DEBUG = DEBUG || ''
-  // if (~DEBUG.toLowerCase().indexOf('slicerack')) {
-    console.log.apply(console, arguments)
-  // }
+  // console.log.apply(console, arguments)
 }

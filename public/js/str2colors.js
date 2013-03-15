@@ -1,11 +1,13 @@
 module.exports = str2colors
 
-function str2colors(text) {
+function str2colors (text) {
+  if (!text.trim()) return
+
   var rgb
   // ignore invalid updates
   try {
     rgb = d3.rgb(text)
-  } catch(e) {
+  } catch (e) {
     return
   }
 
@@ -28,6 +30,7 @@ function str2colors(text) {
     , hsl: 'hsl('
       + [ precision(hsl.h, 2), toPercent(hsl.s), toPercent(hsl.l) ].join(', ')
       + ')'
+    , obj: rgb
     }
 
   // console.log(colors)

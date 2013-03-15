@@ -26,6 +26,7 @@ var mouse = { x: 0
             };
 var image;
 var rack;
+var searchReplace;
 
 $(document).ready(function() {
   $canvas = $('#screen');
@@ -46,7 +47,7 @@ $(document).ready(function() {
   current = $('#current')
 
   rack = createSliceRack('body', '#colors')
-  var searchAndReplace = createSearchReplace('#recolors', '#screen')
+  searchReplace = createSearchReplace('#recolors', '#screen')
 
   setComputedCanvasSize()
 });
@@ -156,6 +157,9 @@ function drop(event) {
       context.drawImage( self, 0, 0
                        , self.width * ratio
                        , self.height * ratio)
+
+      // so search will be re-run.
+      searchReplace.original = null
     }
 
     image.src = event.target.result;
