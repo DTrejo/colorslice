@@ -2,6 +2,7 @@ require('./lib/jquery-1.9.0.min.js')
 require('./lib/d3.v3.min.js')
 require('./lib/excanvas.compiled.js')
 var setComputedCanvasSize = require('./setComputedCanvasSize')
+require('./noWindowHeightJump')
 
 // widgets
 var createSliceRack = require('./sliceRack')
