@@ -1,17 +1,17 @@
 // Converting RGB to YCbCr
 
-module.exports = create;
-function createycbcr(r, g, b) {
+module.exports = createYcbcr;
+function createYcbcr(r, g, b) {
   return new ycbcr(r, g, b)
 }
 
-function ycbcr(r, g, b) {
+function Ycbcr(r, g, b) {
   this.y  = ( .299 * r + .587 * g  +  0.114 * b) + 0
   this.cb = ( -.169 * r + -.331 * g +  0.500 * b) + 128
   this.cr = ( .500 * r + -.419 * g +  -0.081 * b) + 128
 }
 
-ycbcr.prototype.rgb = function rgbPrecise() {
+Ycbcr.prototype.rgb = function rgbPrecise() {
   var y = this.y, cb = this.cb, cr = this.cr
 
   var r = 0
@@ -27,5 +27,5 @@ ycbcr.prototype.rgb = function rgbPrecise() {
 
 
 if (!module.parent) {
-  console.log(create(255, 0, 255).rgb())
+  console.log(createYcbcr(255, 0, 255).rgb())
 }
