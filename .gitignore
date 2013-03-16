@@ -2,3 +2,4 @@ node_modules
 *.css
 public/js/colorslice.min.js
 public/js/recolor.min.js
+public/js/colorscheme.min.js

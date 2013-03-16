@@ -16,7 +16,8 @@ var stylus = require('stylus').middleware({ src: PUBLIC })
 // recompile js bundles on change
 var jsfiles =
   [ path.join(PUBLIC, 'js', 'colorslice.js')
-  , path.join(PUBLIC, 'js', 'recolor.js') ]
+  , path.join(PUBLIC, 'js', 'recolor.js')
+  , path.join(PUBLIC, 'js', 'colorscheme.js') ]
 require('./browserifyWatcher')(jsfiles)
 
 http.createServer(function(req, res) {

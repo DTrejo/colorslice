@@ -1,8 +1,12 @@
-// Converting RGB to YCbCr
+require('./lib/d3.v3.min.js')
 
-module.exports = createYcbcr;
+//
+// Converting RGB to YCbCr
+//
+module.exports = createYcbcr
+
 function createYcbcr(r, g, b) {
-  return new ycbcr(r, g, b)
+  return new Ycbcr(r, g, b)
 }
 
 function Ycbcr(r, g, b) {
@@ -14,17 +18,16 @@ function Ycbcr(r, g, b) {
 Ycbcr.prototype.rgb = function rgbPrecise() {
   var y = this.y, cb = this.cb, cr = this.cr
 
-  var r = 0
-  var g = 0
-  var b = 0
-
   var r = 1 * y +  0 * (cb-128)      +  1.4 * (cr-128)
   var g = 1 * y +  -.343 * (cb-128)  +  -.711 * (cr-128)
   var b = 1 * y +  1.765 * (cb-128)  +  0 * (cr-128)
 
-  return [r, g, b]
-};
+  return d3.rgb(r, g, b)
+}
 
+Ycbcr.prototype.toString = function toString() {
+  return this.y + ',' + this.cb + ',' + this.cr;
+}
 
 if (!module.parent) {
   console.log(createYcbcr(255, 0, 255).rgb())
