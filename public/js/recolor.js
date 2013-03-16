@@ -35,10 +35,10 @@ function recolor (imageData, replacements) {
 
   var hsl = new d3.hsl(0,0,0)
   var rgb = new d3.rgb(0,0,0)
-  var index = 0
+  var index = 0, y = 0, x = 0
   var r = 0, rep
-  for (var y = 0; y < h; ++y) {
-    for (var x = 0; x < w; ++x) {
+  for (y = 0; y < h; ++y) {
+    for (x = 0; x < w; ++x) {
       index = (y * w + x) * 4;
       rgb.r = imageData.data[index]
       rgb.g = imageData.data[index+1]
