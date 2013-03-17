@@ -111,6 +111,11 @@ Rack.prototype.colorHoverOut = function colorHoverOut(e) {
   self.body.css('background-color', self.previous_bg_color)
 }
 
+Rack.prototype.addDivider = function addDivider() {
+  var self = this
+  self.container.prepend('<hr>')
+}
+
 function debug() {
   // console.log.apply(console, arguments)
 }

@@ -74,13 +74,13 @@ div > p:first-child {
   margin-top: 0em;
 }
 
-h3 + p {
-  margin-left: 1.5em
-  label {
-    margin-left: .75em
-    font-size: 1em;
-  }
-}
+// h3 + p {
+//   margin-left: 1.5em
+//   label {
+//     margin-left: .75em
+//     font-size: 1em;
+//   }
+// }
 
 //
 // headings for the two-column layout that holds the slicerack widget and
@@ -93,11 +93,10 @@ h3 + p {
   margin-left: 0em;
   margin-right: 0em;
 
-  > div {
+  > div:first-child {
     display: inline-block;
     // width: 24%;
     width: 310px;
-    border-right: 2px solid black;
     padding-right: 24px;
   }
 
@@ -105,8 +104,8 @@ h3 + p {
     display: inline-table;
     vertical-align: top;
     width: 60%;
-    border: none;
-    padding: 0;
+    border-left: 2px solid black;
+    padding-left: 22px;
   }
 }
 .headings {
@@ -118,7 +117,7 @@ h3 + p {
     width: 310px; // mirrors first col2 div
   }
   > h3 + h3 {
-    margin-left: 24px;
+    margin-left: 30px;
     width: 60%;
   }
 }
@@ -135,6 +134,19 @@ h3 + p {
 #colors > .color {
   padding: .75em;
   padding-left: 48px;
+}
+
+// hides and collapses dividers at the top, and that happen in a row
+#colors > hr:first-child {
+  display: none;
+}
+#colors > hr + hr {
+  display: none;
+}
+#colors > hr {
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.75);
+  background-color: rgba(0,0,0,.75);
 }
 
 // adapt the text to the background of the swatch
@@ -169,25 +181,26 @@ h3 + p {
 code, #colors {
   font-family: monaco, Andale Mono, "Courier New", monospace;
 }
-// #colors > p > img {
-//   display: inline;
-//   padding: 2px;
-// }
 
 #recolors {
   input[type="text"] {
-    width: 50px;
-    // border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    width: 3em;
     background-color: rgba(0,0,0,0);
     box-shadow: inset 0px 1px 2px rgba(0,0,0,.3);
     border: 1px solid rgba(0,0,0,.3);
-    // border: 2px inset rgba(0,0,0,.5);
+
+    &.range {
+      width: 2em;
+    }
   }
 }
 li {
   margin-top: .75em
 }
 
+#schemer input {
+  width: 2em;
+}
 
 //
 // icons for recolor and slicerack widgets

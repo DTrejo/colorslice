@@ -29,6 +29,6 @@ Ycbcr.prototype.toString = function toString() {
   return this.y + ',' + this.cb + ',' + this.cr;
 }
 
-if (!module.parent) {
-  console.log(createYcbcr(255, 0, 255).rgb())
-}
+// if (!module.parent) {
+//   console.log(createYcbcr(255, 0, 255).rgb())
+// }

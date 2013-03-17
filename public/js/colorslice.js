@@ -1,5 +1,4 @@
 require('./lib/jquery-1.9.0.min.js')
-require('./lib/d3.v3.min.js')
 require('./lib/excanvas.compiled.js')
 var setComputedCanvasSize = require('./setComputedCanvasSize')
 require('./noWindowHeightJump')
@@ -7,6 +6,7 @@ require('./noWindowHeightJump')
 // widgets
 var createSliceRack = require('./sliceRack')
 var createSearchReplace = require('./searchReplace')
+var createSchemer = require('./schemer')
 
 // TODO factor out the drag & drop
 // TODO factor out color sampling
@@ -47,8 +47,10 @@ $(document).ready(function() {
   swatchcontext = swatch.getContext('2d')
   current = $('#current')
 
+  // widgets / features
   rack = createSliceRack('body', '#colors')
   searchReplace = createSearchReplace('#recolors', '#screen')
+  schemer = createSchemer('#schemer', '#screen', rack)
 
   setComputedCanvasSize()
 });

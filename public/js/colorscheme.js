@@ -7,7 +7,7 @@ function scheme (canvas, numbuckets) {
   var ctx = canvas.getContext('2d')
   var w = canvas.width
   var h = canvas.height
-  console.log('w, h', w, h)
+  debug('w, h', w, h)
   var imageData = ctx.getImageData(0, 0, w, h)
   var data = imageData.data
   var buckets = _.range(numbuckets).map(function() {
@@ -109,4 +109,8 @@ if (window.location.pathname === '/scheme.html') {
       $('body').append(el)
     })
   }
+}
+
+function debug() {
+  // console.log.apply(console, arguments)
 }
