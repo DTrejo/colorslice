@@ -18,7 +18,7 @@ var jsfiles =
   [ path.join(PUBLIC, 'js', 'colorslice.js')
   , path.join(PUBLIC, 'js', 'recolor.js')
   , path.join(PUBLIC, 'js', 'colorscheme.js') ]
-require('./browserifyWatcher')(jsfiles)
+require('browserify-watcher')(jsfiles)
 
 http.createServer(function(req, res) {
   res.error = ErrorPage(req, res, { debug: true })

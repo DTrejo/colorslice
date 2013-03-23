@@ -1,0 +1,16 @@
+{
+  "name": "browserify-watcher",
+  "version": "1.0.0",
+  "description": "watches a set of js files, bundles each with browserify into a bundle. uses browserify 1.x, currently.",
+  "main": "browserifyWatcher.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "browserify",
+    "watch"
+  ],
+  "author": "David Trejo",
+  "license": "BSD"
+}
