@@ -2,8 +2,10 @@ require('./lib/d3.v3.min.js')
 
 //
 // Converting RGB to YCbCr
+// via
+// http://msdn.microsoft.com/en-us/library/ff635643.aspx
 //
-module.exports = createYcbcr
+module.exports = global.ycbcr = createYcbcr
 
 function createYcbcr(r, g, b) {
   return new Ycbcr(r, g, b)
