@@ -104,5 +104,5 @@ if (window.location.pathname === '/scheme.html') {
 }
 
 function debug() {
-  console.log.apply(console, arguments)
+  // console.log.apply(console, arguments)
 }
