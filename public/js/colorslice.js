@@ -1,6 +1,3 @@
-// to check deploys
-global.package_json = require('../../package.json')
-
 require('./lib/jquery-1.9.0.min.js')
 require('./lib/excanvas.compiled.js')
 var setComputedCanvasSize = require('./setComputedCanvasSize')
