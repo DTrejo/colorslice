@@ -11,7 +11,7 @@ module.exports = csscolors
 function csscolors (css) {
   var colors = []
   var r = rework(css).use(colorscraper(colors))
-  console.log(r.toString())
+  // console.log(r.toString())
   return colors
 }
 
@@ -37,6 +37,7 @@ function colorscraper (colors) {
   function scrape(decl, _, _, _, _) {
     var c = d3.rgb(decl.value.trim())
     if (!c) return
+    console.log(decl.value, c.toString())
     colors.push(c)
     return c.toString()
   }
@@ -44,7 +45,6 @@ function colorscraper (colors) {
 
 // based on rework/lib/function.js
 function matcher (rules) {
-  console.log('bang')
   var valid = Object.keys(rules).forEach(function(k) {
     if (typeof k !== 'string') throw new Error('object must have string keys')
   })
@@ -57,7 +57,7 @@ function matcher (rules) {
         for (var key in rules) {
           var regex = new RegExp(key, 'gi')
           if (!regex.test(decl.value)) continue;
-          console.log(regex, decl)
+          // console.log(regex, decl)
           decl.value = decl.value.replace(regex, replacer, 'gi')
           function replacer (_, m1, m2, m3) {
             return rules[key](decl, m1, m2, m3)
