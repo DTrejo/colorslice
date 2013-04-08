@@ -2,7 +2,7 @@
 
 # Possible feature todos
 ## hard?
-- color changing e.g. turn a range of blue in the image to red
+- √color changing e.g. turn a range of blue in the image to red
     - change that color only in certain parts of the image
 - gradient picking, with CSS3 output
 
@@ -24,8 +24,8 @@
 
 ## Backend todos
 
-- use browserify
-- maybe use one of the component framework things, if browserify doesnt have it
+- √use browserify
+- √maybe use one of the component framework things, if browserify doesnt have it
 
 ## Measuring success
 - over-the-shoulder sessions with designers (some RISD friends of mine)
