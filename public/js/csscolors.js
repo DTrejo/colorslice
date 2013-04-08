@@ -26,8 +26,8 @@ function colorscraper (colors) {
     + '\((.*),(.*),(.*)' // match left paren and r, g, b
     + '(?:,.*)?\)'       // optionally match alpha, always match right paren
 
-  var hex = '#\\d\\d\\d\\d\\d\\d'         // only #000000
-  var shorthex = '#\\d\\d\\d(?!\\d\\d\\d)' // only #000, not #000000
+  var hex = '#[0-9a-f]{6}'         // only #00000f
+  var shorthex = '#[0-9a-f]{3}(?![0-9a-f]{3})' // only #00f, not #00f00f
 
   var rules = {}
   rules[hsla] = rules[rgba] = rules[hex] = rules[shorthex] = scrape
@@ -62,6 +62,8 @@ function matcher (rules) {
           function replacer (_, m1, m2, m3) {
             return rules[key](decl, m1, m2, m3)
           }
+          // can only match one rule
+          break
         }
       })
     })
@@ -79,6 +81,22 @@ if (window.location.pathname === '/csscolors.html') {
     var colors = csscolors(css)
     console.log(colors)
     $('body').append(colors.join('<br>'))
+  })
 
+  var input = $('input')
+  input.change(function(e) {
+    for (var i = 0; i < input[0].files.length; i++) {
+      var file = input[0].files[i]
+      var r = new FileReader()
+      r.readAsText(file);
+      r.onload = function(e) {
+        var css = e.target.result
+        console.log(file.type)
+        if (!file.type.match('text.*')) return // TODO give user an error
+        var colors = csscolors(css)
+        console.log(colors)
+        $('body').append('<br><br>' + colors.join('<br>'))
+      };
+    }
   })
 }
