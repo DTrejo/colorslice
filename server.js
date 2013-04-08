@@ -17,8 +17,9 @@ var stylus = require('stylus').middleware({ src: PUBLIC })
 var jsfiles =
   [ path.join(PUBLIC, 'js', 'colorslice.js')
   , path.join(PUBLIC, 'js', 'recolor.js')
-  , path.join(PUBLIC, 'js', 'colorscheme.js') ]
-require('browserify-watcher')(jsfiles)
+  , path.join(PUBLIC, 'js', 'colorscheme.js')
+  , path.join(PUBLIC, 'js', 'csscolors.js') ]
+var bundles = require('browserify-watcher')(jsfiles)
 
 http.createServer(function(req, res) {
   res.error = ErrorPage(req, res, { debug: true })
@@ -29,6 +30,11 @@ http.createServer(function(req, res) {
     return static(req, res)
   })
 }).listen(PORT)
+
+process.on('uncaughtException', function(err) {
+  console.log('uncaughtException', err.stack)
+  process.exit(0)
+})
 
 console.log('serving dtrejo.com on http://localhost:' + PORT
   + ' with ecstatic@' + ecstatic.version + ' & node@' + process.version
