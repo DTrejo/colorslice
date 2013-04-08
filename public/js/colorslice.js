@@ -7,6 +7,7 @@ require('./noWindowHeightJump')
 var createSliceRack = require('./sliceRack')
 var createSearchReplace = require('./searchReplace')
 var createSchemer = require('./schemer')
+var createCSSImport = require('./cssimport')
 
 // TODO factor out the drag & drop
 // TODO factor out color sampling
@@ -47,10 +48,11 @@ $(document).ready(function() {
   swatchcontext = swatch.getContext('2d')
   current = $('#current')
 
-  // widgets / features
+  // widgets / features. Yes, global, for easy inspection
   rack = createSliceRack('body', '#colors')
   searchReplace = createSearchReplace('#recolors', '#screen')
   schemer = createSchemer('#schemer', '#screen', rack)
+  cssimport = createCSSImport('#cssimport', rack)
 
   setComputedCanvasSize()
 });
@@ -103,7 +105,7 @@ function mousemove(event) {
                  , colors.rgb
                  , colors.hsl.split('(').join('(\n')
                     .split(')').join('\n)').split(', ').join(', \n')
-                  ].join('\n'));
+                 ].join('\n'));
   }
   // testing
   // if (!started) {
@@ -124,9 +126,7 @@ function mousedown(event) {
 function mouseup(event) {
   // capture pixel, display it.
   var d = swatchcontext.getImageData(0, 0, 4, 4).data;
-  var colors = [ d[0], d[1], d[2], d[3] ];
   var rgbarr = [ d[0], d[1], d[2] ];
-
   rack.addSlice(rgbarr)
 }
 

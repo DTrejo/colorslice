@@ -111,14 +111,15 @@ div > p:first-child {
 .headings {
   margin-top: .75em;
   margin-bottom: .75em;
-
-  > h3 {
-    display: inline;
-    width: 310px; // mirrors first col2 div
+  text-align: left;
+  th {
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 1.2em;
+    width: 310px;
   }
-  > h3 + h3 {
-    margin-left: 30px;
-    width: 60%;
+  th + th {
+    width: 60%
   }
 }
 

@@ -56,6 +56,7 @@ function Rack(body, container) {
 
 Rack.prototype.addSlice = function addSlice(rgbarr) {
   var self = this
+  debug('addSlice', rgbarr)
   // keeping the template there can be nice.
   // $('#colors .template').hide()
 
@@ -75,7 +76,7 @@ Rack.prototype.addSlice = function addSlice(rgbarr) {
 // need the el argument b/c don't want to upset or move their
 // cursor with an el.text('...');
 Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
-  debug(el[0],'|', slice[0], '|', colors)
+  debug(el[0], '|', slice[0], '|', colors)
   // ignore invalid updates
   if (!colors) return
 
