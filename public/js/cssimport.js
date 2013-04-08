@@ -24,7 +24,7 @@ function cssimport(input, rack) {
         // TODO possibly sort by Y component of ycbcr?
         var colors = _.uniq(
           csscolors(css).map(function(c) { return c.toString() })
-        )
+        ).sort()
         rack.addDivider()
         colors.forEach(function(str) {
           var c = d3.rgb(str)
