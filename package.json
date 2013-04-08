@@ -2,7 +2,7 @@
   "author": "David Trejo <david.daniel.trejo@gmail.com> (http://dtrejo.com)",
   "name": "colorslice",
   "description": "color picker for your browser using screenshots",
-  "version": "0.1.0-20",
+  "version": "0.1.0-21",
   "repository": {
     "url": ""
   },
@@ -15,7 +15,9 @@
     "ecstatic": "~0.3.2",
     "error-page": "0.0.6",
     "deep-equal": "0.0.0",
-    "browserify-watcher": "~1.1.0"
+    "browserify-watcher": "~1.1.0",
+    "//": "to get access to function.js",
+    "longjohn": "~0.2.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
