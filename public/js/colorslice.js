@@ -8,6 +8,7 @@ var createSliceRack = require('./sliceRack')
 var createSearchReplace = require('./searchReplace')
 var createSchemer = require('./schemer')
 var createCSSImport = require('./cssimport')
+var createAssetRewriter = require('./assetRewriter')
 
 // TODO factor out the drag & drop
 // TODO factor out color sampling
@@ -29,6 +30,8 @@ var mouse = { x: 0
 var image;
 var rack;
 var searchReplace;
+var schemer;
+var assetRewriter;
 
 $(document).ready(function() {
   $canvas = $('#screen');
@@ -50,9 +53,10 @@ $(document).ready(function() {
 
   // widgets / features. Yes, global, for easy inspection
   rack = createSliceRack('body', '#colors')
+  cssimport = createCSSImport('#cssimport', rack)
   searchReplace = createSearchReplace('#recolors', '#screen')
   schemer = createSchemer('#schemer', '#screen', rack)
-  cssimport = createCSSImport('#cssimport', rack)
+  assetRewriter = createAssetRewriter('#assetRewriter', searchReplace)
 
   setComputedCanvasSize()
 });

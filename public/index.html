@@ -37,8 +37,11 @@
         <th>Search &amp; Replace Colors</th>
       </tr>
       <tr>
-        <td><label>Import from CSS
-        <input id="cssimport" type="file" multiple=""></label></td>
+        <td>
+          <label>Import from CSS
+            <input id="cssimport" type="file" multiple="">
+          </label>
+        </td>
         <td>&nbsp;</td>
       </tr>
     </table>
@@ -89,6 +92,21 @@
             <button class="awesome blue">Generate!</button>
           </p>
           <div class="lastscheme"></div>
+        </div>
+
+        <div id="assetRewriter">
+          <h3>Batch Rewrite Images/CSS</h3>
+          <p>
+            <label>
+              Use the rules defined in the "Search & Replace Colors" section to
+              rewrite the given CSS and images.
+              <input type="file" multiple="">
+            </label>
+          </p>
+
+          <p><a href="#bloburlgoeshere" download class="hidden">
+            download modified assets</a>
+          </p>
         </div>
       </div>
     </div>
