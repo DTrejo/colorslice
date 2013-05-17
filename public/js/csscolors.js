@@ -11,7 +11,7 @@ module.exports = csscolors
 function csscolors (css) {
   var colors = []
   var r = rework(css).use(colorscraper(colors))
-  // console.log(r.toString())
+  // debug(r.toString())
   return colors
 }
 
@@ -74,13 +74,13 @@ function colorscraper (colors, replacements) {
     rules[hsla] = rules[rgba] = rules[hex] = rules[shorthex] = rules[wordcolor]
       = scrapeAndReplace
   }
-  console.log(rules)
+  debug(rules)
   return matcher(rules)
 
   function scrape(decl, _, _, _, _) {
     var c = d3.rgb(decl.value.trim())
     if (!c) return
-    console.log(decl.value, c.toString())
+    debug(decl.value, c.toString())
     colors.push(c)
     return c.toString()
   }
@@ -88,7 +88,7 @@ function colorscraper (colors, replacements) {
   function scrapeAndReplace(decl, _, _, _, _) {
     var c = d3.rgb(decl.value.trim())
     if (!c) return
-    console.log(decl.value, c.toString())
+    debug(decl.value, c.toString())
     colors.push(c)
 
     // Return the modified color, replacing the old color.
@@ -130,7 +130,7 @@ function matcher (rules) {
         for (var key in rules) {
           var regex = new RegExp(key, 'gi')
           if (!regex.test(decl.value)) continue;
-          // console.log(regex, decl)
+          // debug(regex, decl)
           decl.value = decl.value.replace(regex, replacer, 'gi')
           function replacer (_, m1, m2, m3) {
             return rules[key](decl, m1, m2, m3)
@@ -146,13 +146,13 @@ function matcher (rules) {
 if (window.location.pathname === '/csscolors.html') {
   require('./lib/jquery-1.9.0.min.js')
   $(function() {
-    console.log('hi')
+    debug('hi')
     var css = $('style').first().text()
-    console.log(css)
+    debug(css)
     $('body').append($('<pre></pre>').text(css))
 
     var colors = csscolors(css)
-    console.log(colors)
+    debug(colors)
     $('body').append(colors.join('<br>'))
 
     // test findReplace
@@ -164,7 +164,7 @@ if (window.location.pathname === '/csscolors.html') {
     }]
     var newCSS = csscolors.findReplace(css, replacements)
     $('style').first().text(newCSS)
-    console.log('findReplace:\n', newCSS)
+    debug('findReplace:\n', newCSS)
   })
 
   var input = $('input')
@@ -175,10 +175,10 @@ if (window.location.pathname === '/csscolors.html') {
       r.readAsText(file);
       r.onload = function(e) {
         var css = e.target.result
-        console.log(file.type)
+        debug(file.type)
         if (!file.type.match('text.*')) return // TODO give user an error
         var colors = csscolors(css)
-        console.log(colors)
+        debug(colors)
         $('body').append('<br><br>' + colors.join('<br>'))
 
         // test findReplace
@@ -188,8 +188,12 @@ if (window.location.pathname === '/csscolors.html') {
           top: 30,
           bot: 50
         }]
-        console.log('findReplace:\n', csscolors.findReplace(css, replacements))
+        debug('findReplace:\n', csscolors.findReplace(css, replacements))
       };
     }
   })
+}
+
+function debug() {
+  // debug.apply(console, arguments)
 }

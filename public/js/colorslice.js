@@ -28,10 +28,6 @@ var mouse = { x: 0
             , y: 0
             };
 var image;
-var rack;
-var searchReplace;
-var schemer;
-var assetRewriter;
 
 $(document).ready(function() {
   $canvas = $('#screen');
@@ -139,7 +135,10 @@ function drop(event) {
   var reader = new FileReader()
   console.log(file)
 
-  reader.onload = function (event) {
+  reader.onload = onload
+  reader.readAsDataURL(file)
+
+  function onload (event) {
     image = document.createElement('img')
     image.onload = function () {
       var self = this;
@@ -171,7 +170,5 @@ function drop(event) {
 
     image.src = event.target.result;
   }
-
-  reader.readAsDataURL(file);
   return cancel(event);
 }
