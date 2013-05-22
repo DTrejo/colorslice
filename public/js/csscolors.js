@@ -1,10 +1,10 @@
 // takes a css string, finds all the instances of colors, then returns them
 // eventually "css" will optionally mean stylus, and maybe even less/sass.
 
-require('./lib/d3.v3.min.js')
 var assert = require('assert')
 var rework = require('../../vendor/rework')
 var visit = rework.visit
+var kul = require('./kul.js')
 
 module.exports = csscolors
 
@@ -51,6 +51,8 @@ csscolors.findReplace = function findReplace (css, replacements) {
 //  var r = rework(css).use(colorscraper(colors, replacements))
 //  var modifiedCSS = r.toString()
 //
+// TODO ensure works on hsla, rgba
+//
 function colorscraper (colors, replacements) {
   var hsla =
     'hsla?'              // match both hsl and hsla
@@ -78,7 +80,7 @@ function colorscraper (colors, replacements) {
   return matcher(rules)
 
   function scrape(decl, _, _, _, _) {
-    var c = d3.rgb(decl.value.trim())
+    var c = kul(decl.value)
     if (!c) return
     debug(decl.value, c.toString())
     colors.push(c)
@@ -86,10 +88,13 @@ function colorscraper (colors, replacements) {
   }
 
   function scrapeAndReplace(decl, _, _, _, _) {
-    var c = d3.rgb(decl.value.trim())
+    var k = kul(decl.value)
+    var c = k.rgbobj
     if (!c) return
     debug(decl.value, c.toString())
     colors.push(c)
+
+    var toString = k.toString // this will render it in the original format
 
     // Return the modified color, replacing the old color.
     // From recolor.js
@@ -108,11 +113,11 @@ function colorscraper (colors, replacements) {
         // hsl.l = rep.ncolor.l + hsl.l - rep.ocolor.l
 
         // only apply the first matched replacement for this pixel
-        return hsl.rgb()
+        return k.toString(hsl.rgb()) // render it using the input's format
       }
     }
-    // leave it unmodified
-    return c.toString()
+    // leave it unmodified, and in same format
+    return k.toString()
   }
 }
 
@@ -145,6 +150,8 @@ function matcher (rules) {
 
 if (window.location.pathname === '/csscolors.html') {
   require('./lib/jquery-1.9.0.min.js')
+  require('./lib/d3.v3.min.js')
+
   $(function() {
     debug('hi')
     var css = $('style').first().text()
