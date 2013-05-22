@@ -45,37 +45,39 @@ function Kul(text) {
     return
   }
 
-  if (first('text', 'hsl')) self.toString = self.hsl
-  else if (first('text', 'rgb')) self.toString = self.rgb
-  else if (first('text', '#')) self.toString = self.hex
-
   // handle:
   // word color, hex, rgb, hsl
-  //
-  self.toString = function() {
-    return self.d3.toString()
-  };
   try {
     self.rgbobj = d3.rgb(text)
-
   } catch (e) {
     console.log('kul: could not parse', text)
     return
   }
+
+  // convert to the input format
+  if (first(text, 'hsl')) self.toString = self.hsl
+  else if (first(text, 'rgb')) self.toString = self.rgb
+  else if (first(text, '#')) self.toString = self.hex
+  else {
+    // in this case, it is a word, so fallback to d3's toString
+    self.toString = (function fallback (rgb) {
+      return (rgb || self.rgbobj).toString()
+    })
+  }
 }
 
-Kul.prototype.rgba = function(rgb) {
+Kul.prototype.rgba = function rgba(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
   return 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + self.alpha + ')'
 }
-Kul.prototype.rgb = function(rgb) {
+Kul.prototype.rgb = function rgb(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
   return 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')'
 }
 
-Kul.prototype.hsla = function(rgb) {
+Kul.prototype.hsla = function hsla(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
   var hsl = rgb.hsl()
@@ -85,7 +87,7 @@ Kul.prototype.hsla = function(rgb) {
       .join(', ')
     + ')'
 }
-Kul.prototype.hsl = function(rgb) {
+Kul.prototype.hsl = function hsl(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
   var hsl = rgb.hsl()
@@ -94,18 +96,18 @@ Kul.prototype.hsl = function(rgb) {
     + ')'
 }
 
-Kul.prototype.hex = function(rgb) {
+Kul.prototype.hex = function hex(rgb) {
   var self = this
   return (rgb || self.rgbobj) + ''
 }
 
-Kul.prototype.rgbarr = function(rgb) {
+Kul.prototype.rgbarr = function rgbarr(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
   return [ rgb.r, rgb.g, rgb.b ]
 }
 
-Kul.prototype.all = function() {
+Kul.prototype.all = function all() {
   var self = this
   return {
     hex: self.hex()
@@ -168,6 +170,18 @@ function test() {
   eq(kul('rgba(4,98, 132,  .1)').rgba(), 'rgba(4, 98, 132, 0.1)')
   eq(kul('hsla(195.94  , 94.12%,   26.67%, 0.  9)') + ''
     , 'hsla(195.94, 94.12%, 26.67%, 0.9)')
+
+  // hsl without percent signs
+
+
+  // words
+  eq(kul('red') + '', '#ff0000')
+
+  // can reuse functions on `kul` to render from one color format to another,
+  // programmatically
+  var rgbobj = d3.rgb('rgb(0,0,0)')
+  eq(kul('#f00f00').toString(rgbobj), '#000000')
+  eq(kul('hsl(1,1%,1%)').toString(rgbobj), 'hsl(0, 0%, 0%)')
 }
 
 function debug() {
