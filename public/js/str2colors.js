@@ -1,5 +1,6 @@
 module.exports = str2colors
 
+// TODO stop using this and use kul.js, which supports alpha colors.
 function str2colors (text) {
   if (!text.trim()) return
 
