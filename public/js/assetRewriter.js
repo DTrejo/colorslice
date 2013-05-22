@@ -90,6 +90,7 @@ Rewriter.prototype.css = function css(css, replacements, filename) {
 
 // strat: load blob url into <img>, load that into a canvas, run recolor,
 // convert canvas.toBlob(), make a link to the blob.
+// TODO warn people when can't export desired mimetype.
 Rewriter.prototype.image = function(bloburl, replacements, filename, mimetype) {
   var self = this
   var canvas = $('<canvas></canvas>')[0]
@@ -98,9 +99,15 @@ Rewriter.prototype.image = function(bloburl, replacements, filename, mimetype) {
   var img = $('<img>').attr('src', bloburl).hide()
   $('body').append(img) // needs to be in dom so can access width and height
   img.load(function() {
+    var w = img.width()
+    var h = img.height()
+    canvas.width = w
+    canvas.height = h
+
     context.drawImage(img[0], 0, 0)
-    debug(0, 0, img.width(), img.height())
-    var oldImageData = context.getImageData(0, 0, img.width(), img.height())
+    debug(0, 0, w, h)
+    debug('getImageData(0, 0, ', w, ', ', h)
+    var oldImageData = context.getImageData(0, 0, w, h)
     img.remove() // no longer needed.
 
     var imageData = recolor(oldImageData, replacements)

@@ -22,7 +22,7 @@ module.exports = recolor
 function recolor (imageData, replacements) {
   var h = imageData.height
   var w = imageData.width
-  console.log('recolor imageData h, w: ', h, w)
+  console.log('recolor imageData w:%d h:%d', w, h)
   // console.log('recolor ocolor ncolor ', ocolor, ncolor, typeof ocolor, typeof ncolor)
   // console.log(top, bot, typeof top, typeof bot)
 
