@@ -23,8 +23,6 @@ function recolor (imageData, replacements) {
   var h = imageData.height
   var w = imageData.width
   console.log('recolor imageData w:%d h:%d', w, h)
-  // console.log('recolor ocolor ncolor ', ocolor, ncolor, typeof ocolor, typeof ncolor)
-  // console.log(top, bot, typeof top, typeof bot)
 
   // convert top and bottom range to hues
   replacements = replacements.map(function(rep) {
@@ -32,6 +30,7 @@ function recolor (imageData, replacements) {
     rep.bothue = (rep.ocolor.h - rep.bot) % 360
     return rep
   })
+  // console.log(replacements)
 
   var hsl = new d3.hsl(0,0,0)
   var rgb = new d3.rgb(0,0,0)
@@ -45,7 +44,7 @@ function recolor (imageData, replacements) {
       rgb.b = imageData.data[index+2]
       // var alpha = imageData.data[index+3]
 
-      hsl = d3.hsl(rgb)
+      hsl = d3.hsl(rgb) // current pixel
       for (r = 0, len = replacements.length; r < len; r++) {
         rep = replacements[r]
         // TODO: do wrap-around math, b/c hue is 0-360 and wraps around
@@ -53,10 +52,14 @@ function recolor (imageData, replacements) {
           // TODO is hue linear
           // if something is -5 hue away from the searched hue, replace with
           // the new hue, but subtract 5 from the new hue.
-          hsl.h = rep.ncolor.h + hsl.h - rep.ocolor.h
-          // hsl.s = rep.ncolor.s + hsl.s - rep.ocolor.s
-          // changing luminance doesn't make sense.
-          // hsl.l = rep.ncolor.l + hsl.l - rep.ocolor.l
+          // console.log('//', rep.ncolor.h, hsl.h, - rep.ocolor.h, + 360, '% 360')
+
+          hsl.h += rep.ncolor.h - rep.ocolor.h
+
+          // TODO: do dynamic range here for better accuracy and definition
+          hsl.s += rep.ncolor.s - rep.ocolor.s
+          hsl.l += rep.ncolor.l - rep.ocolor.l
+
           rgb = hsl.rgb()
 
           imageData.data[index] = rgb.r

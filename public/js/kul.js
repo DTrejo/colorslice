@@ -88,6 +88,7 @@ Kul.prototype.hsla = function hsla(rgb) {
       .join(', ')
     + ')'
 }
+// TODO use 3.55.toFixed()
 Kul.prototype.hsl = function hsl(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
