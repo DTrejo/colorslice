@@ -77,6 +77,7 @@ Kul.prototype.rgb = function rgb(rgb) {
   return 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')'
 }
 
+// TODO more precise? Two versions of this function?
 Kul.prototype.hsla = function hsla(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
