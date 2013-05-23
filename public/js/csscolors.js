@@ -66,7 +66,7 @@ function colorscraper (colors, replacements) {
 
   var hex = '#[0-9a-f]{6}'         // only #00000f
   var shorthex = '#[0-9a-f]{3}(?![0-9a-f]{3})' // only #00f, not #00f00f
-  var wordcolor = '(?:[a-z][a-z]+);?$'
+  var wordcolor = '^[^#][a-z]+;?$' // wow ugly!
 
   var rules = {}
   // yeah this looks funny huh?
@@ -138,6 +138,7 @@ function matcher (rules) {
           // debug(regex, decl)
           decl.value = decl.value.replace(regex, replacer, 'gi')
           function replacer (_, m1, m2, m3) {
+            // debug(key, ':',_, m1, m2, m3)
             return rules[key](decl, m1, m2, m3)
           }
           // can only match one rule
