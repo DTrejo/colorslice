@@ -1,0 +1,161 @@
+{
+  "name": "colorslice",
+  "version": "0.1.0-31",
+  "dependencies": {
+    "browserify-watcher": {
+      "version": "1.1.0",
+      "from": "browserify-watcher@~1.1.0",
+      "dependencies": {
+        "browserify": {
+          "version": "1.18.0",
+          "from": "browserify@~1.18.0",
+          "dependencies": {
+            "detective": {
+              "version": "0.2.1",
+              "from": "detective@~0.2.0",
+              "dependencies": {
+                "esprima": {
+                  "version": "0.9.9",
+                  "from": "esprima@~0.9.9"
+                }
+              }
+            },
+            "buffer-browserify": {
+              "version": "0.0.5",
+              "from": "buffer-browserify@~0.0.1",
+              "dependencies": {
+                "base64-js": {
+                  "version": "0.0.2",
+                  "from": "base64-js@0.0.2"
+                }
+              }
+            },
+            "console-browserify": {
+              "version": "0.1.6",
+              "from": "console-browserify@~0.1.0"
+            },
+            "deputy": {
+              "version": "0.0.4",
+              "from": "deputy@~0.0.3",
+              "dependencies": {
+                "mkdirp": {
+                  "version": "0.3.5",
+                  "from": "mkdirp@~0.3.3"
+                }
+              }
+            },
+            "syntax-error": {
+              "version": "0.0.0",
+              "from": "syntax-error@~0.0.0",
+              "dependencies": {
+                "esprima": {
+                  "version": "0.9.9",
+                  "from": "esprima@~0.9.9"
+                }
+              }
+            },
+            "resolve": {
+              "version": "0.2.8",
+              "from": "resolve@~0.2.0"
+            },
+            "nub": {
+              "version": "0.0.0",
+              "from": "nub@~0.0.0"
+            },
+            "commondir": {
+              "version": "0.0.1",
+              "from": "commondir@~0.0.1"
+            },
+            "coffee-script": {
+              "version": "1.6.2",
+              "from": "coffee-script@1.x.x"
+            },
+            "optimist": {
+              "version": "0.3.7",
+              "from": "optimist@~0.3.4",
+              "dependencies": {
+                "wordwrap": {
+                  "version": "0.0.2",
+                  "from": "wordwrap@~0.0.2"
+                }
+              }
+            },
+            "http-browserify": {
+              "version": "0.1.11",
+              "from": "http-browserify@~0.1.1",
+              "dependencies": {
+                "concat-stream": {
+                  "version": "0.0.8",
+                  "from": "concat-stream@0.0.8"
+                }
+              }
+            },
+            "vm-browserify": {
+              "version": "0.0.1",
+              "from": "vm-browserify@~0.0.0"
+            },
+            "crypto-browserify": {
+              "version": "0.2.1",
+              "from": "crypto-browserify@~0"
+            }
+          }
+        }
+      }
+    },
+    "deep-equal": {
+      "version": "0.0.0",
+      "from": "deep-equal@"
+    },
+    "ecstatic": {
+      "version": "0.3.2",
+      "from": "ecstatic",
+      "dependencies": {
+        "mime": {
+          "version": "1.2.7",
+          "from": "mime@1.2.7"
+        },
+        "ent": {
+          "version": "0.0.5",
+          "from": "ent@0.0.x"
+        },
+        "optimist": {
+          "version": "0.3.5",
+          "from": "optimist@~0.3.4",
+          "dependencies": {
+            "wordwrap": {
+              "version": "0.0.2",
+              "from": "wordwrap@~0.0.2"
+            }
+          }
+        }
+      }
+    },
+    "error-page": {
+      "version": "0.0.6",
+      "from": "error-page"
+    },
+    "extract-values": {
+      "version": "0.1.2",
+      "from": "extract-values@",
+      "resolved": "https://registry.npmjs.org/extract-values/-/extract-values-0.1.2.tgz"
+    },
+    "stylus": {
+      "version": "0.32.0",
+      "from": "stylus",
+      "dependencies": {
+        "cssom": {
+          "version": "0.2.5",
+          "from": "cssom@0.2.x"
+        },
+        "mkdirp": {
+          "version": "0.3.4",
+          "from": "mkdirp@0.3.x"
+        },
+        "debug": {
+          "version": "0.7.2",
+          "from": "debug@*"
+        }
+      }
+    }
+  }
+}
