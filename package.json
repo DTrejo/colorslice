@@ -11,12 +11,13 @@
   ],
   "main": "colorslice.js",
   "dependencies": {
-    "stylus": "~0.32.0",
+    "browserify-watcher": "~1.1.0",
+    "deep-equal": "0.0.0",
     "ecstatic": "~0.3.2",
     "error-page": "0.0.6",
-    "deep-equal": "0.0.0",
-    "browserify-watcher": "~1.1.0",
-    "extract-values": "~0.1.2"
+    "extract-values": "~0.1.2",
+    "husl": "6.0.0",
+    "stylus": "~0.32.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
