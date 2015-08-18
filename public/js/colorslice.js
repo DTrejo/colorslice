@@ -13,7 +13,7 @@ var createAssetRewriter = require('./assetRewriter')
 // TODO factor out the drag & drop
 // TODO factor out color sampling
 var crossBrowserRelativeMousePos = require('./crossBrowserRelativeMousePos')
-var str2colors = require('./str2colors')
+var kul = require('./kul')
 var cancel = require('./cancel')
 
 var started = false;
@@ -100,10 +100,10 @@ function mousemove(event) {
     // also put the color into the #current paragraph
     var d = swatchcontext.getImageData(0, 0, 4, 4).data;
     var rgbarr = [ d[0], d[1], d[2], d[3] ];
-    var colors = str2colors('rgb(' + rgbarr.join(', ') + ')');
-    current.text([ colors.hex
-                 , colors.rgb
-                 , colors.hsl.split('(').join('(\n')
+    var colors = kul('rgb(' + rgbarr.join(', ') + ')');
+    current.text([ colors.hex()
+                 , colors.rgb()
+                 , colors.hsl().split('(').join('(\n')
                     .split(')').join('\n)').split(', ').join(', \n')
                  ].join('\n'));
   }

@@ -15,7 +15,7 @@ function createKul(text) {
 //
 function Kul(text) {
   text = text.trim()
-  if (!text) return
+  if (!text) return // ignore invalid updates
   var self = this
 
   // CSS colors do not need whitespace in them.
@@ -52,7 +52,7 @@ function Kul(text) {
     self.rgbobj = d3.rgb(text)
   } catch (e) {
     console.log('kul: could not parse', text)
-    return
+    return // ignore invalid updates
   }
 
   // convert to the input format
