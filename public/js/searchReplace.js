@@ -1,6 +1,6 @@
 require('./lib/jquery-1.9.0.min.js')
 var recolor = require('./recolor.js')
-var str2colors = require('./str2colors')
+var kul = require('./kul')
 var _ = require('./lib/underscore.js')
 var a = require('assert')
 a.print = true;
@@ -74,11 +74,11 @@ SearchReplace.prototype.gatherReplacement = function gatherReplacement(el) {
     a.ok(ocolor.length)
     a.ok(ncolor.length)
 
-    ocolor = str2colors(ocolor)
+    ocolor = kul(ocolor).all()
     a.ok(ocolor)
     ocolor = ocolor.obj.hsl()
 
-    ncolor = str2colors(ncolor)
+    ncolor = kul(ncolor).all()
     a.ok(ncolor)
     ncolor = ncolor.obj.hsl()
 
