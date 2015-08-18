@@ -4,7 +4,7 @@ require('./lib/jquery-1.9.0.min.js')
 require('./lib/d3.v3.min.js')
 var cancel = require('./cancel')
 var bestContrastYIQ = require('./bestContrastYIQ')
-var str2colors = require('./str2colors')
+// var kul = require('./kul')
 
 // body and container are jquery selectors
 function createRack(body, container) {
@@ -35,7 +35,7 @@ function Rack(body, container) {
   self.container.on('keyup', '.color .c', function(e) {
     var el = $(e.target)
     var slice = el.parent()
-    var colors = str2colors(el.text().trim())
+    var colors = kul(el.text()).all()
     debug('keyup .color .c', el[0], slice[0], colors)
     self.updateSlice(el, slice, colors)
   })
@@ -65,7 +65,7 @@ Rack.prototype.addSlice = function addSlice(rgbarr) {
       .first().clone().removeClass('template')
       .hide()
 
-  var colors = str2colors('rgb(' + rgbarr.join(', ') + ')')
+  var colors = kul('rgb(' + rgbarr.join(', ') + ')').all()
   self.updateSlice(slice.children('.c'), slice, colors)
 
   self.container.prepend(slice)

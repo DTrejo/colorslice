@@ -3,6 +3,7 @@ module.exports = createKul
 require('./lib/d3.v3.min.js')
 // exposes extractValues
 require('extract-values')
+var HUSL = require('husl')
 
 function createKul(text) {
   return new Kul(text)
@@ -56,6 +57,7 @@ function Kul(text) {
 
   // convert to the input format
   if (first(text, 'hsl')) self.toString = self.hsl
+  else if (first(text, 'husl')) self.toString = self.husl
   else if (first(text, 'rgb')) self.toString = self.rgb
   else if (first(text, '#')) self.toString = self.hex
   else {
@@ -97,6 +99,19 @@ Kul.prototype.hsl = function hsl(rgb) {
     + [ precision(hsl.h, 2), toPercent(hsl.s), toPercent(hsl.l) ].join(', ')
     + ')'
 }
+
+Kul.prototype.husl = function(rgb) {
+  var self = this
+  var rgb = rgb || self.rgbobj
+  var husl = HUSL.fromRGB(rgb.r/255, rgb.g/255, rgb.b/255)
+  debug('kul.husl()', rgb, husl)
+  return 'husl('
+    + [ husl[0].toFixed(1)
+      , husl[1].toFixed(1)
+      , husl[2].toFixed(1)
+      ].join(', ')
+    + ')'
+};
 
 Kul.prototype.hex = function hex(rgb) {
   var self = this
@@ -156,8 +171,7 @@ function test() {
   eq(kul('rgb(4, 98, 132)').all(), result)
   eq(kul('hsl(195.94, 94.12%, 26.67%)').all(), result)
 
-
-  // // support pass-through of alpha value, if supplied.
+  // support pass-through of alpha value, if supplied.
   eq(kul('rgba(4, 98, 132, 0.5)')+'', 'rgba(4, 98, 132, 0.5)')
   eq(kul('hsla(195.94, 94.12%, 26.67%, 0.9)') + ''
     , 'hsla(195.94, 94.12%, 26.67%, 0.9)')
@@ -173,8 +187,10 @@ function test() {
   eq(kul('hsla(195.94  , 94.12%,   26.67%, 0.  9)') + ''
     , 'hsla(195.94, 94.12%, 26.67%, 0.9)')
 
-  // hsl without percent signs
+  // husl
+  eq(kul('#046284').husl(), 'husl(233.2, 99.0, 38.6)')
 
+  // hsl without percent signs
 
   // words
   eq(kul('red') + '', '#ff0000')
