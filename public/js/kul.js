@@ -5,6 +5,8 @@ require('./lib/d3.v3.min.js')
 require('extract-values')
 var HUSL = require('husl')
 
+window.HUSL = HUSL
+
 function createKul(text) {
   return new Kul(text)
 }
@@ -46,6 +48,20 @@ function Kul(text) {
     return
   }
 
+  // try and parse a husl color
+  if (first(text, 'husl')) {
+    var vals = extractValues(text, 'husl({h},{s},{l})', opts)
+    var hex = HUSL.toHex(
+      parseFloat(vals.h, 10)
+    , parseFloat(vals.s, 10)
+    , parseFloat(vals.l, 10)
+    )
+    debug('husl vals', vals)
+    self.rgbobj = d3.rgb(hex)
+    self.toString = self.husl
+    return
+  }
+
   // handle:
   // word color, hex, rgb, hsl
   try {
@@ -57,7 +73,6 @@ function Kul(text) {
 
   // convert to the input format
   if (first(text, 'hsl')) self.toString = self.hsl
-  else if (first(text, 'husl')) self.toString = self.husl
   else if (first(text, 'rgb')) self.toString = self.rgb
   else if (first(text, '#')) self.toString = self.hex
   else {
@@ -103,12 +118,13 @@ Kul.prototype.hsl = function hsl(rgb) {
 Kul.prototype.husl = function(rgb) {
   var self = this
   var rgb = rgb || self.rgbobj
-  var husl = HUSL.fromRGB(rgb.r/255, rgb.g/255, rgb.b/255)
-  debug('kul.husl()', rgb, husl)
+  // husl converts from hex with better precision than rgb.
+  var hex = rgb + ''
+  var husl = HUSL.fromHex(hex)
   return 'husl('
-    + [ husl[0].toFixed(1)
-      , husl[1].toFixed(1)
-      , husl[2].toFixed(1)
+    + [ husl[0].toFixed(2)
+      , husl[1].toFixed(2)
+      , husl[2].toFixed(2)
       ].join(', ')
     + ')'
 };
@@ -132,6 +148,7 @@ Kul.prototype.all = function all() {
     , rgbarr: self.rgbarr()
     , hsl: self.hsl()
     , obj: self.rgbobj
+    , husl: self.husl()
   }
 }
 
@@ -164,6 +181,7 @@ function test() {
     , "rgbarr":[4,98,132]
     , "hsl":"hsl(195.94, 94.12%, 26.67%)"
     , "obj":{"r":4,"g":98,"b":132}
+    , "husl":"husl(233.18, 99.01, 38.60)"
     }
 
   // lets not break old functionality
@@ -188,7 +206,8 @@ function test() {
     , 'hsla(195.94, 94.12%, 26.67%, 0.9)')
 
   // husl
-  eq(kul('#046284').husl(), 'husl(233.2, 99.0, 38.6)')
+  eq(kul('#046284').husl(), 'husl(233.18, 99.01, 38.60)')
+  eq(kul('husl(233.18, 99.01, 38.60)').husl(), 'husl(233.18, 99.01, 38.60)')
 
   // hsl without percent signs
 

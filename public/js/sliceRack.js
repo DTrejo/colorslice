@@ -83,6 +83,7 @@ Rack.prototype.updateSlice = function updateSlice(el, slice, colors) {
   el.siblings('.hex').text(colors.hex)
   el.siblings('.rgb').text(colors.rgb)
   el.siblings('.hsl').text(colors.hsl)
+  el.siblings('.husl').text(colors.husl)
   slice
     .css('background-color', colors.rgb)
     .removeClass('black white')
