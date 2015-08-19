@@ -21,6 +21,10 @@
 - √layout that fully uses screen-space
 - canvas should be more "droppable" / have better instructions. the
   drop target should expand to the whole screen like hakeru used to.
+- use husl:
+  √1. migrate str2color to use kul.js
+  √1. add husl to kul.js
+  √1. add husl input to the UI
 
 ## Backend todos
 
