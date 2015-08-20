@@ -70,11 +70,17 @@ function scheme (canvas, numbuckets) {
 
 if (window.location.pathname === '/scheme.html') {
   require('./lib/jquery-1.9.0.min.js')
+  var HUSL = require('husl')
 
+  $('img').first().load(go)
   $(function() {
     $('img').first().load(go)
   })
+  var gone = false
   function go() {
+    if (gone) return
+    gone = true
+
     var image = $('img').first()[0]
     var canvas = $('canvas').first()[0]
     console.log(image, canvas)
@@ -90,16 +96,85 @@ if (window.location.pathname === '/scheme.html') {
     var colors = scheme(canvas, 6)
     console.log(colors)
 
+    var colors = [
+
+      ycbcr(10, 12, 17), // rgb(10, 12, 17)
+      ycbcr(74, 59, 51), // rgb(74, 59, 51)
+      ycbcr(109, 50, 37), // rgb(109, 50, 37)
+      ycbcr(53, 75, 120), // rgb(53, 75, 120)
+      ycbcr(130, 177, 236), // rgb(130, 177, 236)
+    ]
+
     colors.forEach(function(c) {
-      var el = $('<span>&nbsp;</span>')
+      $('body').append(color_square(c.rgb().toString()))
+    })
+    $('body').append('<br><br>')
+
+    var table = $('<table></table>')
+
+    colors.forEach(function(c) {
+      var tr = $('<tr></tr>')
+
+      // 1
+      var td = $('<td></td>')
+      td.append(color_square(setL(c, -.5)))
+      tr.append(td)
+
+      // 2
+      var td = $('<td></td>')
+      td.append(color_square(setL(c, -.25)))
+      tr.append(td)
+
+      // 3
+      var td = $('<td></td>')
+      td.append(color_square(c.rgb().toString()))
+      tr.append(td)
+
+      // 4
+      var td = $('<td></td>')
+      td.append(color_square(setL(c, .25)))
+      tr.append(td)
+
+      // 5
+      var td = $('<td></td>')
+      td.append(color_square(setL(c, .50)))
+      tr.append(td)
+
+      table.append(tr)
+    })
+    $('body').append(table)
+
+    function color_square(hex) {
+      return $('<span>' + hex + '<br> husl(x,x,' + HUSL.fromHex(hex)[2].toFixed(2) + ')</span>')
         .css({
-          'backgroundColor': c.rgb().toString()
+          'backgroundColor': hex
+        , 'color': hex
         , 'height': 100
         , 'width': 100
         , 'display': 'inline-block'
         })
-      $('body').append(el)
-    })
+    }
+    function setL(c, scale) {
+      // sets lightness of a d3 color to a multiple of it's HUSL lightness
+      var husl = HUSL.fromHex(c.rgb().toString())
+
+      // var distance = Math.min(100 - husl[2], husl[2])
+      // husl[2] += (distance * scale)
+
+      husl[2] += 100 * scale
+      if (husl[2] > 100 || husl[2] < 0) return '#ffffff' // ignore it if it if out of range
+
+      var c2 = d3.rgb(HUSL.toHex(husl[0], husl[1], husl[2]))
+      // debug('c', c, scale, '-->', c2, c2.toString())
+      return c2.toString()
+    };
+    function setL(c, c2) {
+      // use the luminance of the c2 in c
+      var husl = HUSL.fromHex(c.rgb().toString())
+      var husl2 = HUSL.fromHex(c2.rgb().toString())
+      var c3 = d3.rgb(HUSL.toHex(husl[0], husl[1], husl2[2]))
+      return c3.toString()
+    };
   }
 }
 
