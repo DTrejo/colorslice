@@ -96,13 +96,26 @@ if (window.location.pathname === '/scheme.html') {
     var colors = scheme(canvas, 6)
     console.log(colors)
 
+    // var colors = [
+    //   ycbcr(10, 12, 17), // rgb(10, 12, 17)
+    //   ycbcr(74, 59, 51), // rgb(74, 59, 51)
+    //   ycbcr(109, 50, 37), // rgb(109, 50, 37)
+    //   ycbcr(53, 75, 120), // rgb(53, 75, 120)
+    //   ycbcr(130, 177, 236), // rgb(130, 177, 236)
+    // ]
+    var arr = '#0a0c11 #98c7f8 #b0c1da #c0dff8 #e2f5fc'.split(' ')
+    var arr = '#120a06 #332216 #7793b4 #96a9bd #b3bac1 #cec0af'.split(' ')
+    var arr = '#012164 #433944 #2e6395 #9e6929 #c1a46b'.split(' ')
+    var arr = '#182d39 #790e07 #286183 #c8513f #eba896'.split(' ')
+    var arr = '#222620 #455e65 #a07204 #cfa42c #e8f6fa'.split(' ')
     var colors = [
-
-      ycbcr(10, 12, 17), // rgb(10, 12, 17)
-      ycbcr(74, 59, 51), // rgb(74, 59, 51)
-      ycbcr(109, 50, 37), // rgb(109, 50, 37)
-      ycbcr(53, 75, 120), // rgb(53, 75, 120)
-      ycbcr(130, 177, 236), // rgb(130, 177, 236)
+      hex2ycbcr(arr[0]),
+      hex2ycbcr(arr[1]),
+      // hex2ycbcr('#786b7e'),
+      hex2ycbcr(arr[2]),
+      // hex2ycbcr('#98c7f8'),
+      hex2ycbcr(arr[3]),
+      hex2ycbcr(arr[4])
     ]
 
     colors.forEach(function(c) {
@@ -112,32 +125,34 @@ if (window.location.pathname === '/scheme.html') {
 
     var table = $('<table></table>')
 
-    colors.forEach(function(c) {
+    colors.forEach(function(c, i) {
       var tr = $('<tr></tr>')
 
+      var siblings = colors.slice(0, i).concat(colors.slice(i, colors.length))
+
       // 1
-      var td = $('<td></td>')
-      td.append(color_square(setL(c, -.5)))
-      tr.append(td)
-
-      // 2
-      var td = $('<td></td>')
-      td.append(color_square(setL(c, -.25)))
-      tr.append(td)
-
-      // 3
       var td = $('<td></td>')
       td.append(color_square(c.rgb().toString()))
       tr.append(td)
 
+      // 2
+      var td = $('<td></td>')
+      td.append(color_square(setL(siblings[0], c)))
+      tr.append(td)
+
+      // 3
+      var td = $('<td></td>')
+      td.append(color_square(setL(siblings[1], c)))
+      tr.append(td)
+
       // 4
       var td = $('<td></td>')
-      td.append(color_square(setL(c, .25)))
+      td.append(color_square(setL(siblings[2], c)))
       tr.append(td)
 
       // 5
       var td = $('<td></td>')
-      td.append(color_square(setL(c, .50)))
+      td.append(color_square(setL(siblings[3], c)))
       tr.append(td)
 
       table.append(tr)
@@ -174,6 +189,10 @@ if (window.location.pathname === '/scheme.html') {
       var husl2 = HUSL.fromHex(c2.rgb().toString())
       var c3 = d3.rgb(HUSL.toHex(husl[0], husl[1], husl2[2]))
       return c3.toString()
+    }
+    function hex2ycbcr(hex) {
+      var rgb = d3.rgb(hex)
+      return ycbcr(rgb.r, rgb.g, rgb.b)
     };
   }
 }
