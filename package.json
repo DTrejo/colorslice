@@ -21,9 +21,6 @@
   },
   "devDependencies": {},
   "optionalDependencies": {},
-  "engines": {
-    "node": "0.8.x"
-  },
   "homepage": "http://colorslice.dtrejo.com/",
   "subdomain": "colorslice",
   "scripts": {

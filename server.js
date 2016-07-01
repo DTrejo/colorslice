@@ -4,7 +4,7 @@ var path = require('path')
 var ErrorPage = require('error-page')
 var ecstatic = require('ecstatic')
 
-var PUBLIC = path.join(__dirname + '/' + 'public')
+var PUBLIC = path.join(__dirname, 'public')
 var PORT = 8080
 // var IS_PROD = process.env.NODE_ENV === 'production'
 
