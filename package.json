@@ -24,6 +24,7 @@
   "homepage": "http://dtrejo.com/colorslice/",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'go visit the running server, then commit changes, then npm run deploy'"
+    "build": "echo 'run the server, visit homepage to recompile css, quit server, commit changes, npm run deploy'",
+    "deploy": "git push origin master:gh-pages"
   }
 }
