@@ -8,7 +8,12 @@
   },
   "main": "colorslice.js",
   "dependencies": {
+    "browserify-mime": "1.2.9",
     "browserify-watcher": "~1.1.0",
+    "color-parser": "0.1.0",
+    "commander": "1.0.4",
+    "css": "1.1.0",
+    "debug": "0.7.4",
     "deep-equal": "0.0.0",
     "ecstatic": "~0.3.2",
     "error-page": "0.0.6",
