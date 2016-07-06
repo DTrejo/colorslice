@@ -1,5 +1,6 @@
 require('./lib/jquery-1.9.0.min.js')
 require('./lib/excanvas.compiled.js')
+require('./lib/jquery.paste_image_reader.js')
 var setComputedCanvasSize = require('./setComputedCanvasSize')
 require('./noWindowHeightJump')
 
@@ -139,36 +140,43 @@ function drop(event) {
   reader.readAsDataURL(file)
 
   function onload (event) {
-    image = document.createElement('img')
-    image.onload = function () {
-      var self = this;
-      var ratio;
-
-      // cases
-      // image dimensions smaller than the canvas
-      // - stretch the image to the canvas
-      // image dimensions bigger than the canvas
-      // - shrink the image to the canvas
-      //
-      // always maintain aspect ratio of the image.
-      // determine the amount of stretching by choosing the longest side,
-      // and scaling the image to fit snugly into the canvas based on this.
-      var ratio;
-      if (self.width > self.height) {
-        ratio = canvas.width / self.width
-      } else {
-        ratio = canvas.height / self.height
-      }
-      // TODO fails when divides by 0
-      context.drawImage( self, 0, 0
-                       , self.width * ratio
-                       , self.height * ratio)
-
-      // so search will be re-run.
-      searchReplace.original = null
-    }
-
-    image.src = event.target.result;
+    return loadImageFromDataURL(event.target.result)
   }
-  return cancel(event);
+  return cancel(event)
 }
+
+function loadImageFromDataURL(dataURL) {
+  image = document.createElement('img')
+  image.onload = function () {
+    var self = this
+    var ratio
+
+    // cases
+    // image dimensions smaller than the canvas
+    // - stretch the image to the canvas
+    // image dimensions bigger than the canvas
+    // - shrink the image to the canvas
+    //
+    // always maintain aspect ratio of the image.
+    // determine the amount of stretching by choosing the longest side,
+    // and scaling the image to fit snugly into the canvas based on this.
+    var ratio;
+    if (self.width > self.height) {
+      ratio = canvas.width / self.width
+    } else {
+      ratio = canvas.height / self.height
+    }
+    // TODO fails when divides by 0
+    context.drawImage( self, 0, 0
+                     , self.width * ratio
+                     , self.height * ratio)
+
+    // so search will be re-run.
+    searchReplace.original = null
+  }
+  image.src = dataURL
+}
+
+$(window).pasteImageReader(function (results) {
+  return loadImageFromDataURL(results.dataURL)
+})
