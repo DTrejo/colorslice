@@ -108,6 +108,17 @@ if (window.location.pathname === '/scheme.html') {
     var arr = '#012164 #433944 #2e6395 #9e6929 #c1a46b'.split(' ')
     var arr = '#182d39 #790e07 #286183 #c8513f #eba896'.split(' ')
     var arr = '#222620 #455e65 #a07204 #cfa42c #e8f6fa'.split(' ')
+    var arr = '#c3c3cd #e4e512 #ebd423 #b1e0d0 #046284'.split(' ')
+    var arr = '#232128 #6c7286 #84b9cb #e5e610 #e1ded5'.split(' ')
+    var arr = '#142b40 #265076 #894853 #958395 #fdc6ab'.split(' ')
+    var arr = '#2e34aa #3056da #8a409c #8d6fe4 #9d90ec'.split(' ')
+    var arr = '#2d261a #33424a #7e909c #d59a68 #f4ebea'.split(' ')
+    var arr = '#0d2d3f #5a131f #09738b #4c9ab8 #90aab6'.split(' ')
+    var arr = '#10120e #423943 #786c78 #ca8060 #dcb889'.split(' ')
+    var arr = '#070a08 #433848 #5876a6 #82b1ec #dad3da'.split(' ')
+    var arr = '#ecd5c8 #c7eafc #40507d #5b4f4c #d11b30'.split(' ')
+    var arr = '#051021 #901a13 #cc5232 #73cdf3 #fdf3ae'.split(' ')
+
     var colors = [
       hex2ycbcr(arr[0]),
       hex2ycbcr(arr[1]),
@@ -128,31 +139,31 @@ if (window.location.pathname === '/scheme.html') {
     colors.forEach(function(c, i) {
       var tr = $('<tr></tr>')
 
-      var siblings = colors.slice(0, i).concat(colors.slice(i, colors.length))
+      // var siblings = colors.slice(0, i).concat(colors.slice(i, colors.length))
 
       // 1
       var td = $('<td></td>')
-      td.append(color_square(c.rgb().toString()))
+      td.append(color_square(setL(colors[0], c)))
       tr.append(td)
 
       // 2
       var td = $('<td></td>')
-      td.append(color_square(setL(siblings[0], c)))
+      td.append(color_square(setL(colors[1], c)))
       tr.append(td)
 
       // 3
       var td = $('<td></td>')
-      td.append(color_square(setL(siblings[1], c)))
+      td.append(color_square(setL(colors[2], c)))
       tr.append(td)
 
       // 4
       var td = $('<td></td>')
-      td.append(color_square(setL(siblings[2], c)))
+      td.append(color_square(setL(colors[3], c)))
       tr.append(td)
 
       // 5
       var td = $('<td></td>')
-      td.append(color_square(setL(siblings[3], c)))
+      td.append(color_square(setL(colors[4], c)))
       tr.append(td)
 
       table.append(tr)
