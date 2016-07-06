@@ -28,7 +28,6 @@
       element = this;
       $this = $(this);
       return $this.bind('paste', function(event) {
-        console.log('hi1')
         var clipboardData, found;
         found = false;
         clipboardData = event.clipboardData;
