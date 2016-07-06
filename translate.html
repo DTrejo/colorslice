@@ -1,0 +1,85 @@
+<head>
+<style>
+  .color.black {
+    color: black;
+  }
+  .color.black:hover {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .color.white {
+    color: white;
+  }
+  .color.white:hover {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+  }
+</style>
+</head>
+
+<h3>translate colors</h3>
+<div class="color">
+  <span contenteditable=true class="hex">#646464</span><br>
+  <span contenteditable=true class="rgb">rgb(100, 100, 100)</span><br>
+  <span contenteditable=true class="hsl">hsl(0, 0, 0.39215686274509803)</span><br>
+  <!-- <span contenteditable=true class="hsla">hsla(0, 0,  0)</span> -->
+</div>
+<p>Yea.</p>
+
+<script src="js/jquery-1.9.0.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<script>
+  $(function() {
+    $('.color').on('keyup', 'span', function(e) {
+      var el = $(e.target)
+      var slice = el.parent()
+      var colors = multiconvert(el.text().trim())
+      // ignore invalid updates
+      if (!colors) return
+
+      el.siblings('.hex').text(colors.hex)
+      el.siblings('.rgb').text(colors.rgb)
+      el.siblings('.hsl').text(colors.hsl)
+      slice
+        .css('background-color', colors.rgb)
+        .removeClass('black white')
+        .addClass(getContrastYIQ(colors.rgbarr))
+    })
+    function multiconvert(text) {
+      var rgb
+      // ignore invalid updates
+      try {
+        rgb = d3.rgb(text)
+      } catch(e) {
+        return
+      }
+
+      // ignore invalid updates
+      var rgbarr = [ rgb.r, rgb.g, rgb.b ]
+      console.log('rgb', rgbarr)
+      var part
+      for (var i = 0; i < rgbarr.length; i++) {
+        part = rgbarr[i]
+        if (isNaN(part) || part < 0) {
+          return
+        }
+      }
+      var hsl = rgb.hsl()
+      var colors =
+        { hex: rgb.toString()
+        , rgb: 'rgb(' + rgbarr.join(', ') + ')'
+        , rgbarr: rgbarr
+        , hsl: 'hsl(' + [ hsl.h, hsl.s, hsl.l ].join(', ') + ')'
+        }
+
+      console.log(colors)
+      return colors
+    }
+    function getContrastYIQ(colors) {
+      var r = colors[0]
+      var g = colors[1]
+      var b = colors[2]
+      var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+      return (yiq >= 128) ? 'black' : 'white';
+    }
+  })
+</script>

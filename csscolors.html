@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>csscolors</title>
+  <style>
+  .s1 { color: rgba(1,1,1,.1);  }
+  .s2 { color: rgb(2,2,2);      }
+  .s3 { color: #333;            }
+  .s4 { color: hsl(4,4%,4%);    }
+  .s5 { color: hsla(5,5%,5%,.1);}
+  .s6 { background-color: #666666; background-color: red; }
+  </style>
+</head>
+<body>
+  <h1>csscolors demo</h1>
+  <label>
+    Import colors from CSS
+    <input type="file" multiple="">
+  </label>
+
+  <h2>cssrewrite demo</h2>
+  <label>
+    rewrite CSS; in this case, change red to blue.
+    <input type="file" multiple="">
+  </label>
+
+  <p class="s1">1</p>
+  <p class="s2">2</p>
+  <p class="s3">3</p>
+  <p class="s4">4</p>
+  <p class="s5">5</p>
+  <p class="s6">6</p>
+
+  <script src="js/csscolors.min.js"></script>
+</body>
+</html>

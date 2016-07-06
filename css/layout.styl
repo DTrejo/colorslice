@@ -1,0 +1,43 @@
+.grid {
+  /* OLD. Only here for firefox. only just makes firefox UI usuable. */
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+
+  /* As of August 2012, only supported in Chrome 21+ */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+
+  min-width: 950px;
+}
+.fixed {
+  margin-left: 1.5em;
+  width: 150px;
+}
+.grid > canvas {
+  /* OLD. Only here for firefox. only just makes firefox UI usuable. */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.fixed canvas:first-child {
+  // height: 30%;
+  // min-width: 100%;
+  width: 150px;
+  height: 150px;
+  display: block;
+}
+.fixed canvas + canvas, .fixed canvas + canvas + pre {
+  // height: 30%;
+  // min-width: 100%;
+  width: 150px;
+  height: 150px;
+  display: block;
+
+  margin-top: 1.5em;
+}

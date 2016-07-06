@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="favicon.png?3" type="image/x-icon">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="http://dtrejo.com/colorslice/">
+</head>
+
+  <body class="white">
+    <h1><a href="http://dtrejo.com/colorslice/">Color Slice</a></h1>
+    <p>Paste* (⌘ + V) or drag &amp; drop image files into the big box.
+    Click to capture a color. Use latest
+    <a href="http://google.com/chrome">Chrome</a>.</p>
+
+    <div class="grid">
+      <canvas id="screen" class="column fluid">No canvas support. If
+        you're using IE email the creator of this and tell him he forgot to
+        use IECanvas!
+      </canvas>
+
+      <div class="fixed">
+        <canvas id="zoom"></canvas>
+
+        <canvas id="swatch"></canvas>
+
+        <!-- <p id="curtext">Current Color</p><br>
+        <pre id="current">(None yet)</pre> -->
+        <pre id="current"></pre>
+      </div>
+    </div>
+
+    <!-- Am I a horrible person? -->
+    <table class="headings">
+      <tr>
+        <th>Swatches (click image to save)</th>
+        <th>Search &amp; Replace Colors</th>
+      </tr>
+      <tr>
+        <td>
+          <label>Import from CSS
+            <input id="cssimport" type="file" multiple="">
+          </label>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+    <!-- <p>Primary color format:
+      <label><input type="radio" name="format" value="hex" checked="true">hex
+      </label>
+      <label><input type="radio" name="format" value="hsl">hsl</label>
+      <label><input type="radio" name="format" value="hsla">hsla</label>
+      <label><input type="radio" name="format" value="rgb">rgb</label>
+      <label><input type="radio" name="format" value="rgba">rgba</label>
+    </p> -->
+
+    <div class="col2">
+      <!-- saved swatches go here -->
+      <div id="colors">
+        <div class="template color">
+          <span contenteditable=true class="c hex">#046284</span><br>
+          <span contenteditable=true class="c rgb">rgb(4, 98, 132)</span><br>
+          <span contenteditable=true class="c hsl">hsl(195.94, 94.12%, 26.67%)</span><br>
+          <span contenteditable=true class="c husl">husl(233.2, 99.0, 38.6)</span><br>
+          <!-- <span class="U clone" href="#">&#009998;</span> -->
+          <span class="U delete">&#009746;</span>
+        </div>
+      </div>
+
+      <div>
+        <div id="recolors">
+          <ol>
+            <li class="recolor template">
+              <!-- TODO <input type="checkbox" checked> -->
+              <span class="U delete">&#009746;</span>
+              Find <input class="c ocolor" type="text" value="blue"></input>,
+              replace with
+              <input class="c ncolor" type="text" value="red"></input>.
+              Match nearby colors within
+              <input class="range" type="text" value="30"></input>&nbsp;
+              &#176;hue
+            </li>
+          </ol>
+          <button class="awesome blue apply">Apply</button>
+          <button class="awesome gray add">+</button>
+        </div>
+
+        <div id="schemer">
+          <h3>Color Palettes</h3> <!-- TODO explain how they are computed -->
+          <p>Based on current image, create color palette with
+            <input type="text" value="6"> colors
+            <button class="awesome blue">Generate!</button>
+          </p>
+          <div class="lastscheme"></div>
+        </div>
+
+        <div id="assetRewriter">
+          <h3>Batch Rewrite Images/CSS</h3>
+          <p>
+            <label>
+              Use the rules defined in the "Search &amp; Replace Colors" section
+              to rewrite the given CSS and images.<br>
+              <input type="file" multiple="">
+            </label>
+            <p>Multiple files are supported. Zip files are not currently
+              supported.</p>
+          </p>
+
+          <p><a href="#bloburlgoeshere" download class="hidden template">
+            download modified assets</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <p>* Screen capturing pro tips: to save your screenshot to the Clipboard, use Command-Shift-Control-3 or Command-Shift-Control-4. If you want to screencap only one window to Clipboard, use Command-Shift-Control-4 and then press Space.</p>
+
+    <p>Made by <a href="http://dtrejo.com/">David Trejo</a> with influence from
+    <a href="http://cs.brown.edu/~jj/">JJ</a> and
+    <a href="http://whichlight.com">Kawandeep Virdee</a>.</p>
+    <p>Post feedback on
+      <a href="https://github.com/dtrejo/colorslice.dtrejo.com/issues">issue
+      page</a>. Or email <em>david åt
+      dtrejo.com</em>
+    </p>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-11131137-3']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' :
+          'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <script src="js/colorslice.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+module.exports = bestContrastYIQ;
+
+// via http://24ways.org/2010/calculating-color-contrast/
+function bestContrastYIQ(colors) {
+  var r = colors[0]
+  var g = colors[1]
+  var b = colors[2]
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return (yiq >= 128) ? 'black' : 'white';
+}

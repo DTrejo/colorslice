@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .grid {
+        /*  As of August 2012, only supported in Chrome 21+ */
+        display: -webkit-flex;
+        display: flex;
+
+        display: box; /* OLD */
+
+        min-width: 950px;
+    }
+    .column {
+      padding: 20px;
+    }
+    .fluid {
+      flex: 1;
+      box-flex: 1; /* OLD */
+      background: #ccc;
+    }
+    .fixed {
+      width: 200px;
+      background: red;
+    }
+    .grid > canvas {
+      display:block;
+      height:100%;
+      width: 100%;
+    }
+    .column.fixed canvas:first-child {
+      border: 1px solid black;
+      height: 40%;
+      min-width: 100%;
+      max-width: 194px;
+      display:block;
+    }
+    .column.fixed canvas + canvas {
+      border: 1px solid blue;
+      height: 40%;
+      min-width: 100%;
+      max-width: 194px;
+      display: block;
+
+      margin-top: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+
+    <canvas class="column fluid"></canvas>
+
+    <div class="column fixed">
+      <canvas></canvas>
+      <canvas></canvas>
+    </div>
+
+  </div>
+
+</body>
+</html>
