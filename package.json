@@ -16,12 +16,14 @@
     "husl": "6.0.0",
     "stylus": "~0.32.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "buildbranch": "1.0.0"
+  },
   "optionalDependencies": {},
   "homepage": "http://dtrejo.com/colorslice/",
   "scripts": {
     "start": "node server.js",
     "build": "echo 'run the server, visit homepage to recompile css, quit server, commit changes, npm run deploy'",
-    "deploy": "git push origin master:gh-pages"
+    "deploy": "buildbranch gh-pages public"
   }
 }

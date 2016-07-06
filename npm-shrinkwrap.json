@@ -1,6 +1,6 @@
 {
   "name": "colorslice",
-  "version": "0.1.0-31",
+  "version": "0.1.0-32",
   "dependencies": {
     "browserify-watcher": {
       "version": "1.1.0",
@@ -10,16 +10,6 @@
           "version": "1.18.0",
           "from": "browserify@~1.18.0",
           "dependencies": {
-            "detective": {
-              "version": "0.2.1",
-              "from": "detective@~0.2.0",
-              "dependencies": {
-                "esprima": {
-                  "version": "0.9.9",
-                  "from": "esprima@~0.9.9"
-                }
-              }
-            },
             "buffer-browserify": {
               "version": "0.0.5",
               "from": "buffer-browserify@~0.0.1",
@@ -30,9 +20,21 @@
                 }
               }
             },
+            "coffee-script": {
+              "version": "1.6.2",
+              "from": "coffee-script@1.x.x"
+            },
+            "commondir": {
+              "version": "0.0.1",
+              "from": "commondir@~0.0.1"
+            },
             "console-browserify": {
               "version": "0.1.6",
               "from": "console-browserify@~0.1.0"
+            },
+            "crypto-browserify": {
+              "version": "0.2.1",
+              "from": "crypto-browserify@~0"
             },
             "deputy": {
               "version": "0.0.4",
@@ -44,39 +46,13 @@
                 }
               }
             },
-            "syntax-error": {
-              "version": "0.0.0",
-              "from": "syntax-error@~0.0.0",
+            "detective": {
+              "version": "0.2.1",
+              "from": "detective@~0.2.0",
               "dependencies": {
                 "esprima": {
                   "version": "0.9.9",
                   "from": "esprima@~0.9.9"
-                }
-              }
-            },
-            "resolve": {
-              "version": "0.2.8",
-              "from": "resolve@~0.2.0"
-            },
-            "nub": {
-              "version": "0.0.0",
-              "from": "nub@~0.0.0"
-            },
-            "commondir": {
-              "version": "0.0.1",
-              "from": "commondir@~0.0.1"
-            },
-            "coffee-script": {
-              "version": "1.6.2",
-              "from": "coffee-script@1.x.x"
-            },
-            "optimist": {
-              "version": "0.3.7",
-              "from": "optimist@~0.3.4",
-              "dependencies": {
-                "wordwrap": {
-                  "version": "0.0.2",
-                  "from": "wordwrap@~0.0.2"
                 }
               }
             },
@@ -90,13 +66,37 @@
                 }
               }
             },
+            "nub": {
+              "version": "0.0.0",
+              "from": "nub@~0.0.0"
+            },
+            "optimist": {
+              "version": "0.3.7",
+              "from": "optimist@~0.3.4",
+              "dependencies": {
+                "wordwrap": {
+                  "version": "0.0.2",
+                  "from": "wordwrap@~0.0.2"
+                }
+              }
+            },
+            "resolve": {
+              "version": "0.2.8",
+              "from": "resolve@~0.2.0"
+            },
+            "syntax-error": {
+              "version": "0.0.0",
+              "from": "syntax-error@~0.0.0",
+              "dependencies": {
+                "esprima": {
+                  "version": "0.9.9",
+                  "from": "esprima@~0.9.9"
+                }
+              }
+            },
             "vm-browserify": {
               "version": "0.0.1",
               "from": "vm-browserify@~0.0.0"
-            },
-            "crypto-browserify": {
-              "version": "0.2.1",
-              "from": "crypto-browserify@~0"
             }
           }
         }
@@ -110,13 +110,13 @@
       "version": "0.3.2",
       "from": "ecstatic",
       "dependencies": {
-        "mime": {
-          "version": "1.2.7",
-          "from": "mime@1.2.7"
-        },
         "ent": {
           "version": "0.0.5",
           "from": "ent@0.0.x"
+        },
+        "mime": {
+          "version": "1.2.7",
+          "from": "mime@1.2.7"
         },
         "optimist": {
           "version": "0.3.5",
@@ -139,6 +139,11 @@
       "from": "extract-values@",
       "resolved": "https://registry.npmjs.org/extract-values/-/extract-values-0.1.2.tgz"
     },
+    "husl": {
+      "version": "6.0.0",
+      "from": "husl@*",
+      "resolved": "https://registry.npmjs.org/husl/-/husl-6.0.0.tgz"
+    },
     "stylus": {
       "version": "0.32.0",
       "from": "stylus",
@@ -147,13 +152,13 @@
           "version": "0.2.5",
           "from": "cssom@0.2.x"
         },
-        "mkdirp": {
-          "version": "0.3.4",
-          "from": "mkdirp@0.3.x"
-        },
         "debug": {
           "version": "0.7.2",
           "from": "debug@*"
+        },
+        "mkdirp": {
+          "version": "0.3.4",
+          "from": "mkdirp@0.3.x"
         }
       }
     }
