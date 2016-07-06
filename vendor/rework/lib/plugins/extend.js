@@ -2,7 +2,8 @@
  * Module dependencies.
  */
 
-var debug = require('debug')('rework:extend');
+// TODO: HACK. why can't browserify find this module?
+// var debug = require('debug')('rework:extend');
 
 /**
  * Add extension support.
