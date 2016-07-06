@@ -6,9 +6,6 @@
   "repository": {
     "url": ""
   },
-  "domains": [
-    "colorslice.dtrejo.com"
-  ],
   "main": "colorslice.js",
   "dependencies": {
     "browserify-watcher": "~1.1.0",

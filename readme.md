@@ -1,7 +1,6 @@
-[ColorSlice.dtrejo.com](http://ColorSlice.dtrejo.com)
-===
-See the app at [ColorSlice.dtrejo.com](http://ColorSlice.dtrejo.com)
+# [dtrejo.com/colorslice](http://dtrejo.com/colorslice)
 
-Cheers!
+See the app at [dtrejo.com/colorslice](http://dtrejo.com/colorslice)
 
+Cheers!<br>
 D
